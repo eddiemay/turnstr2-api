@@ -22,5 +22,4 @@ class V1::SignupsController < V1::BaseController
   end
 
 
-
 end
