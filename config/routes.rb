@@ -15,5 +15,13 @@ Rails.application.routes.draw do
   namespace :v1, defaults: { format: :json } do
     resource  :sessions,   only:   [:show, :create, :destroy]
     resource :signup, only: [:create]
+
+
+    namesapce :user do
+      resource :profile
+      
+    end  
+
   end
+
 end
