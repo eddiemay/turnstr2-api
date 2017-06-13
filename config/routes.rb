@@ -17,9 +17,9 @@ Rails.application.routes.draw do
     resource :signup, only: [:create]
 
 
-    namesapce :user do
-      resource :profile
-      
+    namespace :user do
+      resource :profile, only:   [:show, :update]
+
     end  
 
   end
