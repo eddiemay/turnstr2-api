@@ -2,15 +2,15 @@ class Story < ApplicationRecord
   
   
  # Paperclip configuration for adding image to User
-  has_attached_file :story_face1_thumb_url, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :story_face2_thumb_url, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :story_face3_thumb_url, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :story_face4_thumb_url, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :story_face1_url, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :story_face2_url, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :story_face3_url, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :story_face4_url, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :face1_thumb, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :face2_thumb, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :face3_thumb, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :face4_thumb, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :story_face1, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :story_face2, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :story_face3, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :story_face4, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
 
-  validates_attachment_content_type :story_face1_thumb_url, :story_face2_thumb_url, :story_face3_thumb_url,:story_face4_thumb_url, :story_face1_url, :story_face2_url, :story_face3_url, :story_face4_url, content_type: /\Aimage\/.*\Z/
+  validates_attachment_content_type :face1_thumb, :face2_thumb, :face3_thumb,:face4_thumb, :story_face1, :story_face2, :story_face3, :story_face4, content_type: /\Aimage\/.*\Z/
 
 end
