@@ -3,13 +3,15 @@ class V1::User::StoriesController < V1::User::BaseController
 
   # GET /stories
   def index
-    @stories = Story.all
-    render json:@stories
+    @stories = current_user.stories.all
+    render_success data: {
+        stories: ActiveModel::Serializer::CollectionSerializer.new(@photos, serializer: StorySerializer)
+    }
   end
 
   # GET /stories/1
   def show
-    render json: {success: true, message: 'Story fetched successfully', data: { story: StorySerializer.new(@story) }}
+    render json: {success: true, data: { story: StorySerializer.new(@story) }}
   end
 
   # POST /stories
@@ -41,7 +43,7 @@ class V1::User::StoriesController < V1::User::BaseController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_story
-      @story = Story.find(params[:id])
+      @story = current_user.stories.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

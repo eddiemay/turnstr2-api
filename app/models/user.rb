@@ -18,6 +18,7 @@ class User < ApplicationRecord
 
 
   has_many :photos
+  has_many :stories
   
   def password_reset_expired?
     reset_password_sent_at < 2.hours.ago

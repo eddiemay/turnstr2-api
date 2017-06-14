@@ -3,7 +3,7 @@ class V1::User::PhotosController < V1::User::BaseController
 
   # GET /photos
   def index
-    @photos = current_user.photos.select("*, concat(year(captured_date), month(captured_date)) as m").group("concat(year(captured_date), month(captured_date))")
+    @photos = current_user.photos.grouped
     render_success data: {
         photos: ActiveModel::Serializer::CollectionSerializer.new(@photos, serializer: PhotosSerializer)
     }
