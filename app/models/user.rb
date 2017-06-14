@@ -16,6 +16,9 @@ class User < ApplicationRecord
   validates :username, uniqueness: true, allow_nil: true
   validates :password, length: {:within => 8..20}, confirmation: true, presence: true, :if => lambda{ !password.nil? }
 
+
+  has_many :photos
+  
   def password_reset_expired?
     reset_password_sent_at < 2.hours.ago
   end

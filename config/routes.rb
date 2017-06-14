@@ -19,6 +19,7 @@ Rails.application.routes.draw do
 
     namespace :user do
       resource :profile, only:   [:show, :update]
+      resources :photos
 
     end  
 
