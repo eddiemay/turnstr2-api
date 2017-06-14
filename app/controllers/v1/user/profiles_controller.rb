@@ -21,7 +21,7 @@ class V1::User::ProfilesController < V1::User::BaseController
 
   # Only allow a trusted parameter "white list" through.
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :gender, :avatar_face1, :avatar_face2, :avatar_face3, :avatar_face4, :avatar_face5, :avatar_face6,
+    params.require(:user).permit(:username, :info, :phone, :first_name, :last_name, :gender, :avatar_face1, :avatar_face2, :avatar_face3, :avatar_face4, :avatar_face5, :avatar_face6,
     															:website, :bio, :address, :city, :state)
     
   end	
