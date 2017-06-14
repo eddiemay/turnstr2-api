@@ -10,7 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170421115537) do
+ActiveRecord::Schema.define(version: 20170614073124) do
+
+  create_table "stories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.string   "caption"
+    t.integer  "total_likes"
+    t.string   "story_face1_thumb_url_file_name"
+    t.string   "story_face1_thumb_url_content_type"
+    t.integer  "story_face1_thumb_url_file_size"
+    t.datetime "story_face1_thumb_url_updated_at"
+    t.string   "story_face2_thumb_url_file_name"
+    t.string   "story_face2_thumb_url_content_type"
+    t.integer  "story_face2_thumb_url_file_size"
+    t.datetime "story_face2_thumb_url_updated_at"
+    t.string   "story_face3_thumb_url_file_name"
+    t.string   "story_face3_thumb_url_content_type"
+    t.integer  "story_face3_thumb_url_file_size"
+    t.datetime "story_face3_thumb_url_updated_at"
+    t.string   "story_face4_thumb_url_file_name"
+    t.string   "story_face4_thumb_url_content_type"
+    t.integer  "story_face4_thumb_url_file_size"
+    t.datetime "story_face4_thumb_url_updated_at"
+    t.string   "story_face1_url_file_name"
+    t.string   "story_face1_url_content_type"
+    t.integer  "story_face1_url_file_size"
+    t.datetime "story_face1_url_updated_at"
+    t.string   "story_face2_url_file_name"
+    t.string   "story_face2_url_content_type"
+    t.integer  "story_face2_url_file_size"
+    t.datetime "story_face2_url_updated_at"
+    t.string   "story_face3_url_file_name"
+    t.string   "story_face3_url_content_type"
+    t.integer  "story_face3_url_file_size"
+    t.datetime "story_face3_url_updated_at"
+    t.string   "story_face4_url_file_name"
+    t.string   "story_face4_url_content_type"
+    t.integer  "story_face4_url_file_size"
+    t.datetime "story_face4_url_updated_at"
+    t.boolean  "active",                             default: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
+    t.index ["user_id"], name: "index_stories_on_user_id", using: :btree
+  end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
@@ -69,4 +111,5 @@ ActiveRecord::Schema.define(version: 20170421115537) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "stories", "users"
 end

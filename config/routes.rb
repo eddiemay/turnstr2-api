@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :controllers
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
 
@@ -19,9 +20,9 @@ Rails.application.routes.draw do
 
     namespace :user do
       resource :profile, only:   [:show, :update]
+      resources :stories
 
     end  
 
   end
-
 end
