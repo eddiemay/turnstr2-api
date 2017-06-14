@@ -3,16 +3,16 @@ class CreateStories < ActiveRecord::Migration[5.0]
     create_table :stories do |t|
     	t.references :user, foreign_key: true
     	t.string :caption
-    	t.integer :total_likes
-    	t.attachment :story_face1_thumb_url
-    	t.attachment :story_face2_thumb_url
-    	t.attachment :story_face3_thumb_url
-    	t.attachment :story_face4_thumb_url
-    	t.attachment :story_face1_url
-    	t.attachment :story_face2_url
-    	t.attachment :story_face3_url
-    	t.attachment :story_face4_url
-    	t.boolean :active, default: false
+    	t.integer :likes_count
+    	t.attachment :face1_thumb
+    	t.attachment :face2_thumb
+    	t.attachment :face3_thumb
+    	t.attachment :face4_thumb
+    	t.attachment :story_face1
+    	t.attachment :story_face2
+    	t.attachment :story_face3
+    	t.attachment :story_face4
+    	t.boolean :active, default: true
       	t.timestamps
     end
   end
