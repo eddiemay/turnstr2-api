@@ -30,22 +30,23 @@ ActiveRecord::Schema.define(version: 20170614073124) do
     t.integer  "user_id"
     t.string   "caption"
     t.integer  "likes_count"
-    t.string   "face1_thumb_file_name"
-    t.string   "face1_thumb_content_type"
-    t.integer  "face1_thumb_file_size"
-    t.datetime "face1_thumb_updated_at"
-    t.string   "face2_thumb_file_name"
-    t.string   "face2_thumb_content_type"
-    t.integer  "face2_thumb_file_size"
-    t.datetime "face2_thumb_updated_at"
-    t.string   "face3_thumb_file_name"
-    t.string   "face3_thumb_content_type"
-    t.integer  "face3_thumb_file_size"
-    t.datetime "face3_thumb_updated_at"
-    t.string   "face4_thumb_file_name"
-    t.string   "face4_thumb_content_type"
-    t.integer  "face4_thumb_file_size"
-    t.datetime "face4_thumb_updated_at"
+    t.integer  "comments_count"
+    t.string   "face1_video_thumb_file_name"
+    t.string   "face1_video_thumb_content_type"
+    t.integer  "face1_video_thumb_file_size"
+    t.datetime "face1_video_thumb_updated_at"
+    t.string   "face2_video_thumb_file_name"
+    t.string   "face2_video_thumb_content_type"
+    t.integer  "face2_video_thumb_file_size"
+    t.datetime "face2_video_thumb_updated_at"
+    t.string   "face3_video_thumb_file_name"
+    t.string   "face3_video_thumb_content_type"
+    t.integer  "face3_video_thumb_file_size"
+    t.datetime "face3_video_thumb_updated_at"
+    t.string   "face4_video_thumb_file_name"
+    t.string   "face4_video_thumb_content_type"
+    t.integer  "face4_video_thumb_file_size"
+    t.datetime "face4_video_thumb_updated_at"
     t.string   "story_face1_file_name"
     t.string   "story_face1_content_type"
     t.integer  "story_face1_file_size"
@@ -62,9 +63,9 @@ ActiveRecord::Schema.define(version: 20170614073124) do
     t.string   "story_face4_content_type"
     t.integer  "story_face4_file_size"
     t.datetime "story_face4_updated_at"
-    t.boolean  "active",                   default: true
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.boolean  "active",                         default: true
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
     t.index ["user_id"], name: "index_stories_on_user_id", using: :btree
   end
 
