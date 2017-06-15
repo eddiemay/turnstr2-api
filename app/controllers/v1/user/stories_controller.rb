@@ -16,7 +16,7 @@ class V1::User::StoriesController < V1::User::BaseController
 
   # POST /stories
   def create
-    @story = Story.new(story_params)
+    @story = current_user.stories.new(story_params)
 
     if @story.save
       render json: {success: true, message: 'Story created successfully', data: { story: StorySerializer.new(@story) }}, status: :created
