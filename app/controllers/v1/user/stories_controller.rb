@@ -5,7 +5,7 @@ class V1::User::StoriesController < V1::User::BaseController
   def index
     @stories = current_user.stories.all
     render_success data: {
-        stories: ActiveModel::Serializer::CollectionSerializer.new(@photos, serializer: StorySerializer)
+        stories: ActiveModel::Serializer::CollectionSerializer.new(@stories, serializer: StorySerializer)
     }
   end
 
@@ -48,6 +48,6 @@ class V1::User::StoriesController < V1::User::BaseController
 
     # Only allow a trusted parameter "white list" through.
     def story_params
-      params.require(:story).permit(:user_id, :caption, :total_likes, :story_face1_thumb_url, :story_face2_thumb_url, :story_face3_thumb_url, :story_face4_thumb_url, :story_face1_url, :story_face2_url, :story_face3_url, :story_face4_url, :active )
+      params.require(:story).permit(:user_id, :caption, :likes_count, :face1_thumb, :face2_thumb, :face3_thumb, :face4_thumb, :story_face1, :story_face2, :story_face3, :story_face4, :active )
     end
 end
