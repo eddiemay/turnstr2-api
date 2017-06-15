@@ -9,10 +9,10 @@ class CreateStories < ActiveRecord::Migration[5.0]
     	t.attachment :face2_video_thumb
     	t.attachment :face3_video_thumb
     	t.attachment :face4_video_thumb
-    	t.attachment :story_face1
-    	t.attachment :story_face2
-    	t.attachment :story_face3
-    	t.attachment :story_face4
+    	t.attachment :face1_media
+    	t.attachment :face2_media
+    	t.attachment :face3_media
+    	t.attachment :face4_media
     	t.boolean :active, default: true
       	t.timestamps
     end
