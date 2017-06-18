@@ -49,9 +49,9 @@ test:
 #
 staging:
   <<: *default
-  database: turnstr2-api_staging
-  username: root
-  password: QAR7VZEL
+  database: turnstr2_api_staging
+  username: turnstr2_staging
+  password: Root@1234
   host: 13.58.15.144
 
 production:
