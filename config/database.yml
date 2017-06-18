@@ -47,6 +47,13 @@ test:
 #   production:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
+staging:
+  <<: *default
+  database: turnstr2-api_staging
+  username: root
+  password: QAR7VZEL
+  host: 13.58.15.144
+
 production:
   <<: *default
   database: turnstr2-api_production

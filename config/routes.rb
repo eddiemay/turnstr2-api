@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   mount Resque::Server, at: '/resque'
 
   namespace :v1, defaults: { format: :json } do
+    get '/ping', to: 'ping#show'
     resource  :sessions,   only:   [:show, :create, :destroy]
     resource :signup, only: [:create]
 
