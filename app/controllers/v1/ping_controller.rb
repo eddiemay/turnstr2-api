@@ -1,7 +1,7 @@
-class V1::PingController < V1::BaseController
+class V1::PingController < ApplicationController
 
   def show
-    render_success message: 'Pong'
+    render json: {message: 'Pong'}
   end
 
 
