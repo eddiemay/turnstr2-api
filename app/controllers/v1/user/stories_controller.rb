@@ -19,18 +19,18 @@ class V1::User::StoriesController < V1::User::BaseController
     @story = current_user.stories.new(story_params)
 
     if @story.save
-      render json: {success: true, message: 'Story created successfully', data: { story: StorySerializer.new(@story) }}, status: :created
+      render_success data: {story: StorySerializer.new(@story) }, message: I18n.t('resource.created', resource: Story.model_name.human)
     else
-      render json: @story.errors, status: :unprocessable_entity
+      render_unprocessable_entity message: @story.errors.full_messages.join(', ')
     end
   end
 
   # PATCH/PUT /stories/1
   def update
     if @story.update(story_params)
-      render json: {success: true, message: 'Story updated successfully', data: { story: StorySerializer.new(@story) }}
+      render_success data: {story: StorySerializer.new(@story) }, message: I18n.t('resource.updated', resource: Story.model_name.human)
     else
-      render json: @story.errors, status: :unprocessable_entity
+      render_unprocessable_entity message: @story.errors.full_messages.join(', ')
     end
   end
 
