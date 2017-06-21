@@ -18,11 +18,19 @@ Rails.application.routes.draw do
     resource  :sessions,   only:   [:show, :create, :destroy]
     resource :signup, only: [:create]
 
+    resources :stories do
+      resources :comments, controller: 'story/comments'
+    end
+
 
     namespace :user do
       resource :profile, only:   [:show, :update]
-      resources :photos
-      resources :stories
+      resources :photos do
+        resources :comments
+      end  
+      resources :stories do
+        resources :comments
+      end  
     end  
 
   end

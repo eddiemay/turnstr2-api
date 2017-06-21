@@ -1,6 +1,8 @@
 class Photo < ApplicationRecord
 	belongs_to :user
 
+	has_many :comments, as: :commentable
+	
 	# Paperclip configuration for adding image to User
   has_attached_file :image, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"                    
  	validates_attachment_presence :image
