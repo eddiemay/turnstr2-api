@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     resource  :sessions,   only:   [:show, :create, :destroy]
     resource :signup, only: [:create]
 
-    resources :stories do
+    resources :stories, controller: 'story/stories' do
       resources :comments, controller: 'story/comments'
     end
 

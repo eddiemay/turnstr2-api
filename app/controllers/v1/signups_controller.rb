@@ -18,7 +18,7 @@ class V1::SignupsController < V1::BaseController
   end
 
   def signup_params
-    params.require(:signup).permit(:email, :password)
+    params.require(:signup).permit(:email, :password, :first_name, :last_name, :username)
   end
 
 
