@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 20170621112035) do
 
-  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer  "user_id"
     t.boolean  "is_approved",                    default: false
     t.string   "commentable_type"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20170621112035) do
     t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
   end
 
-  create_table "photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer  "user_id"
     t.string   "image_file_name"
     t.string   "image_content_type"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20170621112035) do
     t.index ["user_id"], name: "index_photos_on_user_id", using: :btree
   end
 
-  create_table "stories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "stories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.integer  "user_id"
     t.string   "caption"
     t.integer  "likes_count"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20170621112035) do
     t.index ["user_id"], name: "index_stories_on_user_id", using: :btree
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string   "email"
     t.string   "username"
     t.string   "password_digest"
