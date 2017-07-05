@@ -3,9 +3,16 @@ class V1::CommentsController < V1::BaseController
 
   # GET /comments
   def index
-    comments = @commentable.comments
-
-    render json: comments
+    comments = @commentable.comments.page current_page
+    render_success data: {
+        stories: ActiveModel::Serializer::CollectionSerializer.new(comments, serializer: CommentsSerializer),
+        total_pages: comments.total_pages,
+        current_page: comments.current_page,
+        next_page: comments.next_page,
+        prev_page: comments.prev_page,
+        first_page: comments.first_page?,
+        last_page: comments.last_page?
+    }
   end
 
   # GET /comments/1
