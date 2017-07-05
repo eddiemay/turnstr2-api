@@ -5,7 +5,7 @@ class V1::CommentsController < V1::BaseController
   def index
     comments = @commentable.comments.page current_page
     render_success data: {
-        stories: ActiveModel::Serializer::CollectionSerializer.new(comments, serializer: CommentsSerializer),
+        comments: ActiveModel::Serializer::CollectionSerializer.new(comments, serializer: CommentsSerializer),
         total_pages: comments.total_pages,
         current_page: comments.current_page,
         next_page: comments.next_page,
@@ -17,7 +17,7 @@ class V1::CommentsController < V1::BaseController
 
   # GET /comments/1
   def show
-    render json: @comment
+    render json: {success: true, data: { comment: CommentsSerializer.new(@comment) }}
   end
 
   # POST /comments
@@ -25,24 +25,28 @@ class V1::CommentsController < V1::BaseController
     comment = @commentable.comments.create!(comment_params)
     comment.user_id = current_user.id
     if comment.save
-      render json: @comment
+      render_success data: {comment: CommentsSerializer.new(comment) }, message: I18n.t('resource.created', resource: Comment.model_name.human)
     else
-      render json: @comment.errors, status: :unprocessable_entity
+      render_unprocessable_entity message: comment.errors.full_messages.join(', ')
     end
   end
 
   # PATCH/PUT /comments/1
   def update
     if @comment.update(comment_params)
-      render json: @comment
+      render_success data: {comment: CommentsSerializer.new(comment) }, message: I18n.t('resource.updated', resource: Comment.model_name.human)
     else
-      render json: @comment.errors, status: :unprocessable_entity
+      render_unprocessable_entity message: comment.errors.full_messages.join(', ')
     end
   end
 
   # DELETE /comments/1
   def destroy
-    @comment.destroy
+    if @comment.destroy
+      render json: {success: true, message: 'Comment deleted successfully', data: { comment: CommentsSerializer.new(@comment) }}
+    else
+      render_unprocessable_entity message: comment.errors.full_messages.join(', ')
+    end
   end
 
   private
