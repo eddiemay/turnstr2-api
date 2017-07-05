@@ -2,9 +2,15 @@ class V1::Story::StoriesController < V1::Story::BaseController
 
   # GET /stories
   def index
-    @stories = ::Story.all
+    @stories = ::Story.page current_page
     render_success data: {
-        stories: ActiveModel::Serializer::CollectionSerializer.new(@stories, serializer: StorySerializer)
+        stories: ActiveModel::Serializer::CollectionSerializer.new(@stories, serializer: StorySerializer),
+        total_pages: @stories.total_pages,
+        current_page: @stories.current_page,
+        next_page: @stories.next_page,
+        prev_page: @stories.prev_page,
+        first_page: @stories.first_page?,
+        last_page: @stories.last_page?
     }
   end
 

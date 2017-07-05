@@ -37,6 +37,8 @@ gem 'enumerize'
 # overrride the sinatra version comming with resques by default to use this version
 gem 'sinatra', '2.0.0.beta2'
 
+# Easy to use gem for pagination
+gem 'kaminari'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

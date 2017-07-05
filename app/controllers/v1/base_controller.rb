@@ -9,5 +9,10 @@ class V1::BaseController < ApplicationController
     @current_user
   end
 
+  def current_page
+  	params[:page] || 1
+  end	
+
+
 
 end
