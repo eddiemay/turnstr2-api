@@ -1,5 +1,7 @@
 class StorySerializer < ActiveModel::Serializer
-	attributes :id, :user_id, :caption, :likes_count, :comments_count, :media
+	attributes :id, :caption, :likes_count, :comments_count, :media
+
+	belongs_to :user
 
 	def media
 		[
