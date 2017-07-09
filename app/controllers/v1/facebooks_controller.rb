@@ -1,14 +1,14 @@
 class V1::FacebooksController < V1::BaseController
  
   skip_before_action :validate_user
-  
+
   # POST /facebooks
   def create
     # Check required params
     check_required_params params, [:user_id, :access_token]
 
     begin
-      fb_user = FbGraph2::User.new(params[:user_id]).authenticate(params[:access_token])
+      fb_user = FbGraph2::User.me(params[:access_token]).fetch(fields: [:name, :email, :first_name, :last_name])
       fb_user.fetch
     rescue FbGraph2::Exception::InvalidToken => ex
       render_error(message: ex.message) and return
@@ -22,14 +22,14 @@ class V1::FacebooksController < V1::BaseController
 
 
     # see if user alredy there in db 
-    user = User.find_by(fb_user_id: params[:user_id])
+    user = ::User.find_by(fb_user_id: params[:user_id])
 
     # try to find user by email if fb_user_id do not exists
-    user = User.find_by(email: fb_user.email) unless user
+    user = ::User.find_by(email: fb_user.email) unless user
 
     unless user
       # create user by fb details
-      user = User.new({email: fb_user.email, first_name: fb_user.name, fb_user_id: fb_user.id})
+      user = ::User.new({email: fb_user.email, first_name: fb_user.name, fb_user_id: fb_user.id})
 
       unless user.save
         render_unprocessable_entity(message: user.errors.full_messages.join(', ') ) and return
