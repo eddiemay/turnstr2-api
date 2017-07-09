@@ -1,6 +1,7 @@
 class V1::FacebooksController < V1::BaseController
-  before_action :set_facebook, only: [:show, :update, :destroy]
-
+ 
+  skip_before_action :validate_user
+  
   # POST /facebooks
   def create
     # Check required params
