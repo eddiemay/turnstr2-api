@@ -29,7 +29,7 @@ class V1::FacebooksController < V1::BaseController
 
     unless user
       # create user by fb details
-      user = ::User.new({email: fb_user.email, first_name: fb_user.name, fb_user_id: fb_user.id})
+      user = ::User.new({email: fb_user.email, first_name: fb_user.first_name, last_name: fb_user.last_name, fb_user_id: fb_user.id})
 
       unless user.save
         render_unprocessable_entity(message: user.errors.full_messages.join(', ') ) and return
