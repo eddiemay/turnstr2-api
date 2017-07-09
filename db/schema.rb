@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170621112035) do
+ActiveRecord::Schema.define(version: 20170709065440) do
 
-  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.boolean  "is_approved",                    default: false
     t.string   "commentable_type"
@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 20170621112035) do
     t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
   end
 
-  create_table "photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.string   "image_file_name"
     t.string   "image_content_type"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20170621112035) do
     t.index ["user_id"], name: "index_photos_on_user_id", using: :btree
   end
 
-  create_table "stories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "stories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.string   "caption"
     t.integer  "likes_count"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20170621112035) do
     t.index ["user_id"], name: "index_stories_on_user_id", using: :btree
   end
 
-  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
     t.string   "username"
     t.string   "password_digest"
@@ -133,7 +133,9 @@ ActiveRecord::Schema.define(version: 20170621112035) do
     t.string   "role"
     t.datetime "created_at",                                              null: false
     t.datetime "updated_at",                                              null: false
+    t.bigint   "fb_user_id"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["fb_user_id"], name: "index_users_on_fb_user_id", unique: true, using: :btree
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 

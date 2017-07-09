@@ -8,7 +8,7 @@ module UserAuthentication
   included do
 
     # For authentication with password
-    has_secure_password
+    has_secure_password validations: false
 
   end
 

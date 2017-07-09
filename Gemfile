@@ -50,6 +50,7 @@ gem 'paperclip', '~> 5.0.0'
 gem 'aws-sdk', '~> 2.3'
 gem 'listen', '~> 3.0.5'
 
+gem 'fb_graph2'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

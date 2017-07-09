@@ -14,8 +14,8 @@ class User < ApplicationRecord
 
   
   validates :username, uniqueness: true, allow_nil: true
-  validates :email, :first_name, :last_name, :username, presence: true
-  validates :password, length: {:within => 8..20}, confirmation: true, presence: true, :if => lambda{ !password.nil? }
+  validates :email, presence: true
+  validates :password, length: {:within => 8..20}, confirmation: true, :if => lambda{ !password.nil? }
 
 
   has_many :photos

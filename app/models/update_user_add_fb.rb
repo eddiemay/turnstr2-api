@@ -1,0 +1,2 @@
+class UpdateUserAddFb < ApplicationRecord
+end
