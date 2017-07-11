@@ -5,9 +5,7 @@ class UserListSerializer < ActiveModel::Serializer
   %w(avatar_face1 avatar_face2 avatar_face3 avatar_face4 avatar_face5 avatar_face6).each do |attr|
     define_method attr do
       if object.send(attr).present?
-        {
-            url: object.send(attr).try(:url, :thumb),
-        }
+        object.send(attr).try(:url, :thumb)
       end
     end
   end
