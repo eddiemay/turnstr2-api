@@ -1,5 +1,5 @@
 class Photo < ApplicationRecord
-	belongs_to :user
+	belongs_to :album
 
 	has_many :comments, as: :commentable
 	
@@ -11,7 +11,7 @@ class Photo < ApplicationRecord
 
 	before_create :set_captured_date
 
-	scope :grouped, -> {select("*, concat(year(captured_date), month(captured_date)) as month_group").group("concat(year(captured_date), month(captured_date))")}
+	scope :grouped, -> {select("concat(year(captured_date), month(captured_date)) as month_group").group("concat(year(captured_date), month(captured_date))")}
 
 	def set_captured_date
 		self.captured_date = Date.today unless self.captured_date
