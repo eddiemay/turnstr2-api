@@ -26,8 +26,8 @@ Rails.application.routes.draw do
 
     namespace :user do
       resource :profile, only:   [:show, :update]
-      resources :photos do
-        resources :comments
+      resources :albums, only: [:index] do
+        resources :photos
       end  
       resources :stories do
         resources :comments, controller: 'story/comments'
