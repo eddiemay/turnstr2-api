@@ -1,6 +1,6 @@
 class V1::User::PhotosController < V1::User::BaseController
-  before_action :set_album
-  before_action :set_photo, only: [:show, :update, :destroy]
+  before_action :set_album, only: [:index]
+  before_action :set_photo, only: [:show, :destroy]
 
   # GET /photos
   def index
@@ -30,14 +30,6 @@ class V1::User::PhotosController < V1::User::BaseController
   end
 
 
-  # PATCH/PUT /photos/1
-  def update
-    if @photo.update(photo_params)
-      render_success data: {photo: PhotosSerializer.new(@photo)}, message: I18n.t('resource.updated', resource: Photo.model_name.human)
-    else
-      render_unprocessable_entity message: @photo.errors.full_messages.join(', ')
-    end
-  end
 
   # DELETE /photos/1
   def destroy
