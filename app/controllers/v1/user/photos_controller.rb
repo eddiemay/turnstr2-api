@@ -1,9 +1,10 @@
 class V1::User::PhotosController < V1::User::BaseController
-  before_action :set_photo, only: [:show, :update, :destroy]
+  before_action :set_album, only: [:index]
+  before_action :set_photo, only: [:show, :destroy]
 
   # GET /photos
   def index
-    @photos = current_user.photos.grouped
+    @photos = @album.photos
     render_success data: {
         photos: ActiveModel::Serializer::CollectionSerializer.new(@photos, serializer: PhotosSerializer)
     }
@@ -12,12 +13,14 @@ class V1::User::PhotosController < V1::User::BaseController
 
   # GET /photos/1
   def show
-    render json: @photo
+    render_success data: {
+      photo: PhotosSerializer.new(@photo)
+    }
   end
 
   # POST /photos
   def create
-    @photo = current_user.photos.new(photo_params)
+    @photo = current_user.albums.current[0].photos.new(photo_params)
 
     if @photo.save
       render_success data: {photo: PhotosSerializer.new(@photo)}, message: I18n.t('resource.updated', resource: Photo.model_name.human)
@@ -27,14 +30,6 @@ class V1::User::PhotosController < V1::User::BaseController
   end
 
 
-  # PATCH/PUT /photos/1
-  def update
-    if @photo.update(photo_params)
-      render_success data: {photo: PhotosSerializer.new(@photo)}, message: I18n.t('resource.updated', resource: Photo.model_name.human)
-    else
-      render_unprocessable_entity message: @photo.errors.full_messages.join(', ')
-    end
-  end
 
   # DELETE /photos/1
   def destroy
@@ -42,9 +37,13 @@ class V1::User::PhotosController < V1::User::BaseController
   end
 
   private
+    def set_album
+      @album = current_user.albums.find(params[:album_id])
+    end 
+
     # Use callbacks to share common setup or constraints between actions.
     def set_photo
-      @photo = current_user.photos.find(params[:id])
+      @photo = album.photos.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

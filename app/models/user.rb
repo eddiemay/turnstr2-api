@@ -18,7 +18,8 @@ class User < ApplicationRecord
   validates :password, length: {:within => 8..20}, confirmation: true, :if => lambda{ !password.nil? }
 
 
-  has_many :photos
+  has_many :albums
+  has_many :photos, through: :albums
   has_many :stories
   has_many :comments
   
@@ -38,5 +39,14 @@ class User < ApplicationRecord
   def send_password_reset_email
     #UserMailer.password_reset(self).deliver_now
   end
+
+  def create_default_albums
+    return if albums.count > 0 
+    year = Date.today.year
+    (1..12).each do |month|
+      self.albums.create({month: month, year: year, title: "#{Date::MONTHNAMES[month]}, #{year}"})
+    end  
+
+  end  
 
 end

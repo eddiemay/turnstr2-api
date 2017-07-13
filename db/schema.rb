@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170709065440) do
+ActiveRecord::Schema.define(version: 20170711161032) do
+
+  create_table "albums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "month"
+    t.integer  "year"
+    t.string   "title"
+    t.string   "cover_image_url"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.index ["user_id", "month", "year"], name: "index_albums_on_user_id_and_month_and_year", unique: true, using: :btree
+    t.index ["user_id"], name: "index_albums_on_user_id", using: :btree
+  end
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -24,7 +36,6 @@ ActiveRecord::Schema.define(version: 20170709065440) do
   end
 
   create_table "photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer  "user_id"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
@@ -33,8 +44,9 @@ ActiveRecord::Schema.define(version: 20170709065440) do
     t.string   "visibility"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.index ["user_id", "visibility"], name: "index_photos_on_user_id_and_visibility", using: :btree
-    t.index ["user_id"], name: "index_photos_on_user_id", using: :btree
+    t.integer  "album_id"
+    t.index ["album_id"], name: "index_photos_on_album_id", using: :btree
+    t.index ["visibility"], name: "index_photos_on_user_id_and_visibility", using: :btree
   end
 
   create_table "stories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -139,7 +151,8 @@ ActiveRecord::Schema.define(version: 20170709065440) do
     t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
+  add_foreign_key "albums", "users"
   add_foreign_key "comments", "users"
-  add_foreign_key "photos", "users"
+  add_foreign_key "photos", "albums"
   add_foreign_key "stories", "users"
 end
