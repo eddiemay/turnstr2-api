@@ -24,7 +24,7 @@ Rails.application.routes.draw do
     end
 
     resources :photos, controller: 'photos/photos' do
-      resources :comments, controller: 'photos/comments'
+      resources :comments, controller: 'photos/comments', only: [:index]
     end
       
 
@@ -33,7 +33,9 @@ Rails.application.routes.draw do
       resource :profile, only:   [:show, :update]
       resources :photos, only: [:create]
       resources :albums, only: [:index] do
-        resources :photos, only: [:index, :show, :destroy]
+        resources :photos, only: [:index, :show, :destroy] do
+          resources :comments, controller: 'photos/comments'
+        end  
       end  
       resources :stories do
         resources :comments, controller: 'story/comments'
