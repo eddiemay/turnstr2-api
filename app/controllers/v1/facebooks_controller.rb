@@ -45,6 +45,6 @@ class V1::FacebooksController < V1::BaseController
   private
     # Only allow a trusted parameter "white list" through.
     def facebook_params
-      params.fetch(:facebook, {}).permit(:user_id, :accss_token)
+      params.fetch(:facebook, {}).permit(:user_id, :access_token)
     end
 end
