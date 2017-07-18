@@ -1,5 +1,5 @@
 class V1::User::PhotosController < V1::User::BaseController
-  before_action :set_album, only: [:index]
+  before_action :set_album, only: [:index, :show]
   before_action :set_photo, only: [:show, :destroy]
 
   # GET /photos
@@ -43,7 +43,7 @@ class V1::User::PhotosController < V1::User::BaseController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_photo
-      @photo = album.photos.find(params[:id])
+      @photo = @album.photos.find(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.
