@@ -22,7 +22,7 @@ class V1::CommentsController < V1::BaseController
 
   # POST /comments
   def create
-    comment = @commentable.comments.create!(comment_params)
+    comment = @commentable.comments.new(comment_params)
     comment.user_id = current_user.id
     if comment.save
       render_success data: {comment: CommentsSerializer.new(comment) }, message: I18n.t('resource.created', resource: Comment.model_name.human)
