@@ -23,6 +23,11 @@ Rails.application.routes.draw do
       resources :comments, controller: 'story/comments', only: [:index]
     end
 
+    resources :photos, controller: 'photos/photos' do
+      resources :comments, controller: 'photos/comments'
+    end
+      
+
 
     namespace :user do
       resource :profile, only:   [:show, :update]
