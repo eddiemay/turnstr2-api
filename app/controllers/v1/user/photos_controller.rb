@@ -1,5 +1,5 @@
 class V1::User::PhotosController < V1::User::BaseController
-  before_action :set_album, only: [:index, :show]
+  before_action :set_album, only: [:index, :show, :destroy]
   before_action :set_photo, only: [:show, :destroy]
 
   # GET /photos
@@ -23,7 +23,7 @@ class V1::User::PhotosController < V1::User::BaseController
     @photo = current_user.albums.current[0].photos.new(photo_params)
 
     if @photo.save
-      render_success data: {photo: PhotosSerializer.new(@photo)}, message: I18n.t('resource.updated', resource: Photo.model_name.human)
+      render_success data: {photo: PhotosSerializer.new(@photo)}, message: I18n.t('resource.crated', resource: Photo.model_name.human)
     else
       render_unprocessable_entity message: @photo.errors.full_messages.join(', ')
     end
@@ -33,7 +33,11 @@ class V1::User::PhotosController < V1::User::BaseController
 
   # DELETE /photos/1
   def destroy
-    @photo.destroy
+    if @photo.destroy
+      render_success data: {photo: PhotosSerializer.new(@photo)}, message: I18n.t('resource.deleted', resource: Photo.model_name.human)
+    else
+      render_unprocessable_entity message: @photo.errors.full_messages.join(', ')
+    end
   end
 
   private

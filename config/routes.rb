@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       resource :profile, only:   [:show, :update]
       resources :photos, only: [:create]
       resources :albums, only: [:index] do
-        resources :photos, only: [:index, :show, :destory]
+        resources :photos, only: [:index, :show, :destroy]
       end  
       resources :stories do
         resources :comments, controller: 'story/comments'
