@@ -21,10 +21,13 @@ Rails.application.routes.draw do
 
     resources :stories, controller: 'story/stories' do
       resources :comments, controller: 'story/comments', only: [:index]
+      resources :likes, controller: 'story/likes', only: [:create, :destroy]
     end
 
     resources :photos, controller: 'photos/photos' do
-      resources :comments, controller: 'photos/comments', only: [:index]
+      resources :comments, controller: 'photos/comments', only: [:index, :create, :destroy, :update]
+      resources :likes, controller: 'photos/likes', only: [:create, :destroy]
+
     end
       
 
@@ -34,11 +37,11 @@ Rails.application.routes.draw do
       resources :photos, only: [:create]
       resources :albums, only: [:index] do
         resources :photos, only: [:index, :show, :destroy] do
-          resources :comments, controller: 'photos/comments'
+          resources :comments, controller: 'photos/comments', only: [:index]
         end  
       end  
       resources :stories do
-        resources :comments, controller: 'story/comments'
+        resources :comments, controller: 'story/comments', only: [:index]
       end  
     end  
 

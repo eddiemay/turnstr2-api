@@ -16,7 +16,8 @@ class V1::Photos::PhotosController < V1::Photos::BaseController
 
   # GET /stories/1
   def show
-    render json: {success: true, data: { story: PhotosSerializer.new(@story) }}
+    @photo = Photo.find params[:id]
+    render json: {success: true, data: { story: PhotosSerializer.new(@photo) }}
   end
 
 end

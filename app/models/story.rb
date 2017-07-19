@@ -3,6 +3,7 @@ class Story < ApplicationRecord
   belongs_to :user
 
   has_many :comments, as: :commentable
+  has_many :likes, as: :likable
   
  # Paperclip configuration for adding image to User
   has_attached_file :face1_video_thumb, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
