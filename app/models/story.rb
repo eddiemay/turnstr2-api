@@ -10,10 +10,15 @@ class Story < ApplicationRecord
   has_attached_file :face2_video_thumb, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
   has_attached_file :face3_video_thumb, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
   has_attached_file :face4_video_thumb, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :face5_video_thumb, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :face6_video_thumb, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+
   has_attached_file :face1_media, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
   has_attached_file :face2_media, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
   has_attached_file :face3_media, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
   has_attached_file :face4_media, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :face5_media, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :face6_media, styles: { thumb: "300x300>"}, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
 
   validates :face1_media, :face2_media, :face3_media, :face4_media, attachment_presence: true
   validates_attachment_content_type :face1_media, :face2_media, :face3_media, :face4_media, content_type: ['image/jpeg', 'image/png', 'video/mp4']
@@ -23,6 +28,8 @@ class Story < ApplicationRecord
   before_face2_media_post_process :is_image_face2_media?
   before_face3_media_post_process :is_image_face3_media?
   before_face4_media_post_process :is_image_face4_media?
+  before_face5_media_post_process :is_image_face5_media?
+  before_face6_media_post_process :is_image_face6_media?
 
   
   def is_image_face1_media?
@@ -41,6 +48,13 @@ class Story < ApplicationRecord
     is_image?(face4_media)
   end
 
+  def is_image_face5_media?
+    is_image?(face5_media)
+  end  
+
+  def is_image_face6_media?
+    is_image?(face6_media)
+  end
 
   def is_image?(attachment)
     ["image/jpeg", "image/pjpeg", "image/png", "image/x-png", "image/gif"].include?(attachment.content_type) 

@@ -54,6 +54,6 @@ class V1::User::StoriesController < V1::User::BaseController
 
     # Only allow a trusted parameter "white list" through.
     def story_params
-      params.require(:story).permit(:caption, :face1_video_thumb, :face2_video_thumb, :face3_video_thumb, :face4_video_thumb, :face1_media, :face2_media, :face3_media, :face4_media)
+      params.require(:story).permit(:caption, :face1_video_thumb, :face2_video_thumb, :face3_video_thumb, :face4_video_thumb, :face5_video_thumb, :face6_video_thumb,:face1_media, :face2_media, :face3_media, :face4_media, :face5_media, :face6_media)
     end
 end

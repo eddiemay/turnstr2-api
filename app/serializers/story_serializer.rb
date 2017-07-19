@@ -29,6 +29,17 @@ class StorySerializer < ActiveModel::Serializer
 				media_type:object.face4_media.content_type
 			},
 
+			{
+				media_url: object.face5_media.url, 
+				thumb_url: object.face5_media.content_type == 'video/mp4' ? object.face5_video_thumb.url(:thumb) : object.face5_media.url(:thumb)  , 
+				media_type:object.face5_media.content_type
+			},
+
+			{
+				media_url: object.face6_media.url, 
+				thumb_url: object.face6_media.content_type == 'video/mp4' ? object.face6_video_thumb.url(:thumb) : object.face6_media.url(:thumb)  , 
+				media_type:object.face6_media.content_type
+			}
 
 
 		]
