@@ -1,5 +1,5 @@
 class V1::Story::CommentsController < V1::CommentsController
-  before_action :set_commentable
+  prepend_before_action :set_commentable
 
   private
 

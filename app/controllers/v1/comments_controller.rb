@@ -34,7 +34,7 @@ class V1::CommentsController < V1::BaseController
   # PATCH/PUT /comments/1
   def update
     if @comment.update(comment_params)
-      render_success data: {comment: CommentsSerializer.new(comment) }, message: I18n.t('resource.updated', resource: Comment.model_name.human)
+      render_success data: {comment: CommentsSerializer.new(@comment) }, message: I18n.t('resource.updated', resource: Comment.model_name.human)
     else
       render_unprocessable_entity message: comment.errors.full_messages.join(', ')
     end

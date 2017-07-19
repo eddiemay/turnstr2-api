@@ -23,6 +23,8 @@ class User < ApplicationRecord
   has_many :stories
   has_many :comments
   has_many :likes
+  has_many :liked_photo, through: :likes, source: :likable, source_type: 'Photo'
+  has_many :liked_story, through: :likes, source: :likable, source_type: 'Story'
   
   def password_reset_expired?
     reset_password_sent_at < 2.hours.ago

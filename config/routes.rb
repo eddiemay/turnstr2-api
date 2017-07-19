@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     post '/facebook/login', to: 'facebooks#create'
 
     resources :stories, controller: 'story/stories' do
-      resources :comments, controller: 'story/comments', only: [:index]
+      resources :comments, controller: 'story/comments', only: [:index, :create, :destroy, :update]
       resources :likes, controller: 'story/likes', only: [:create, :destroy]
     end
 
