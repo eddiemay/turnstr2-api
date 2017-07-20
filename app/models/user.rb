@@ -35,6 +35,15 @@ class User < ApplicationRecord
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
 
+  has_many :family, -> (user){ 
+    unscope(where: :user_id)
+    .where('users.id in (
+      select followed_id from relationships where follower_id = :user_id and followed_id in ( 
+        select follower_id from relationships where followed_id= :user_id))', 
+        user_id: user.id
+      )}, 
+    class_name: 'User'
+
     # Follows a user.
   def follow(other_user)
     following << other_user
