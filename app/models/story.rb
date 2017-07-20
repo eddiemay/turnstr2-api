@@ -31,6 +31,7 @@ class Story < ApplicationRecord
   before_face5_media_post_process :is_image_face5_media?
   before_face6_media_post_process :is_image_face6_media?
 
+  #validations
   
   def is_image_face1_media?
     is_image?(face1_media)
