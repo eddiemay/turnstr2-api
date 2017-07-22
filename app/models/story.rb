@@ -1,5 +1,6 @@
 class Story < ApplicationRecord
   include CanBeLiked
+  include CanBeCommented
   
   belongs_to :user
 

@@ -1,5 +1,6 @@
 class Photo < ApplicationRecord
 	include CanBeLiked
+	include CanBeCommented
 	belongs_to :album
 
 	has_many :comments, as: :commentable

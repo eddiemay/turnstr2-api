@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170722104629) do
+ActiveRecord::Schema.define(version: 20170722155545) do
 
   create_table "albums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -53,10 +53,11 @@ ActiveRecord::Schema.define(version: 20170722104629) do
     t.datetime "image_updated_at"
     t.date     "captured_date"
     t.string   "visibility"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "album_id"
-    t.integer  "likes_count"
+    t.integer  "likes_count",        default: 0
+    t.integer  "comments_count",     default: 0
     t.index ["album_id"], name: "index_photos_on_album_id", using: :btree
     t.index ["visibility"], name: "index_photos_on_user_id_and_visibility", using: :btree
   end
@@ -74,8 +75,8 @@ ActiveRecord::Schema.define(version: 20170722104629) do
   create_table "stories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.string   "caption"
-    t.integer  "likes_count"
-    t.integer  "comments_count"
+    t.integer  "likes_count",                    default: 0
+    t.integer  "comments_count",                 default: 0
     t.string   "face1_video_thumb_file_name"
     t.string   "face1_video_thumb_content_type"
     t.integer  "face1_video_thumb_file_size"
