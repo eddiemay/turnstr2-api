@@ -10,4 +10,8 @@ module CanBeLiked
   	likes.where(user_id: user.id).count > 0
   end	
 
+  def get_like(user)
+  	likes.find_by(user_id: user.id)
+  end	
+
 end

@@ -47,11 +47,15 @@ class User < ApplicationRecord
     # Follows a user.
   def follow(other_user)
     following << other_user
+    update_attributes(following_count: following.count, family_count: family.count)
+    other_user.update_attributes(follower_count: other_user.followers.count, family_count: other_user.family.count)
   end
 
   # Unfollows a user.
   def unfollow(other_user)
     following.delete(other_user)
+    update_attributes(following_count: following.count, family_count: family.count)
+    other_user.update_attributes(follower_count: other_user.followers.count, family_count: other_user.family.count)
   end
 
   # Returns true if the current user is following the other user.

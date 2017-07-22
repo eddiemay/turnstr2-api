@@ -3,17 +3,24 @@ class V1::LikesController < V1::BaseController
 
   # POST /comments
   def create
-    like = @likable.likes.new
-    like.user_id = current_user.id
-    begin
+    # works like and unlik both
+
+    if like = @likable.get_like(current_user)
+      # already liked. Unlike it
+      if like.destroy
+        render json: {success: true, message: 'Unlike successfully', data: { like: LikeSerializer.new(like) }}
+      else
+        render_unprocessable_entity message: like.errors.full_messages.join(', ')
+      end
+    else  
+      like = @likable.likes.new
+      like.user_id = current_user.id
       if like.save
         render_success data: {like: LikeSerializer.new(like) }, message: I18n.t('resource.created', resource: Like.model_name.human)
       else
         render_unprocessable_entity message: like.errors.full_messages.join(', ')
       end
-    rescue ActiveRecord::RecordNotUnique
-      render_unprocessable_entity message: "Already liked"
-    end  
+    end    
   end
 
 
@@ -26,7 +33,7 @@ class V1::LikesController < V1::BaseController
     if @like.destroy
       render json: {success: true, message: 'Like deleted successfully', data: { like: LikeSerializer.new(@like) }}
     else
-      render_unprocessable_entity message: like.errors.full_messages.join(', ')
+      render_unprocessable_entity message: @like.errors.full_messages.join(', ')
     end
   end
 
