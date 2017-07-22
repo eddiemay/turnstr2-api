@@ -85,6 +85,6 @@ class User < ApplicationRecord
       self.albums.create({month: month, year: year, title: "#{Date::MONTHNAMES[month]}, #{year}"})
     end  
 
-  end  
+  end 
 
 end
