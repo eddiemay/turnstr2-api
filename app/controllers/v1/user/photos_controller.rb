@@ -14,7 +14,7 @@ class V1::User::PhotosController < V1::User::BaseController
   # GET /photos/1
   def show
     render_success data: {
-      photo: PhotosSerializer.new(@photo)
+      photo: PhotoDetailsSerializer.new(@photo, current_user: current_user)
     }
   end
 
@@ -23,7 +23,7 @@ class V1::User::PhotosController < V1::User::BaseController
     @photo = current_user.albums.current[0].photos.new(photo_params)
 
     if @photo.save
-      render_success data: {photo: PhotosSerializer.new(@photo)}, message: I18n.t('resource.crated', resource: Photo.model_name.human)
+      render_success data: {photo: PhotoDetailsSerializer.new(@photo, current_user: current_user)}, message: I18n.t('resource.crated', resource: Photo.model_name.human)
     else
       render_unprocessable_entity message: @photo.errors.full_messages.join(', ')
     end
