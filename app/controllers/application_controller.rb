@@ -6,6 +6,7 @@ class ApplicationController < ActionController::API
   include ActionController::MimeResponds
   include ActionController::ImplicitRender
 
+
   # Filters
   before_action :set_locale
 

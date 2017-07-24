@@ -1,4 +1,6 @@
 class Story < ApplicationRecord
+  include CanBeLiked
+  include CanBeCommented
   
   belongs_to :user
 
@@ -60,5 +62,5 @@ class Story < ApplicationRecord
   def is_image?(attachment)
     ["image/jpeg", "image/pjpeg", "image/png", "image/x-png", "image/gif"].include?(attachment.content_type) 
   end
-
+    
 end

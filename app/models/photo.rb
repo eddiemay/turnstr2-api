@@ -1,4 +1,6 @@
 class Photo < ApplicationRecord
+	include CanBeLiked
+	include CanBeCommented
 	belongs_to :album
 
 	has_many :comments, as: :commentable
@@ -17,5 +19,6 @@ class Photo < ApplicationRecord
 	def set_captured_date
 		self.captured_date = Date.today unless self.captured_date
 	end
+
 		
 end
