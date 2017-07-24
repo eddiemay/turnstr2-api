@@ -1,6 +1,7 @@
 class Story < ApplicationRecord
   include CanBeLiked
   include CanBeCommented
+  default_scope { order(created_at: :desc) }
   
   belongs_to :user
 
