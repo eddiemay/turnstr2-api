@@ -34,6 +34,8 @@ Rails.application.routes.draw do
 
     namespace :user do
       resources :followers, only: [:index]
+      resources :following, only: [:index]
+      resources :family, only: [:index]
       resource :profile, only:   [:show, :update]
       resources :photos, only: [:create]
       resources :albums, only: [:index] do

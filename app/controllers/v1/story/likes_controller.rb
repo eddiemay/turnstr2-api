@@ -4,6 +4,6 @@ class V1::Story::LikesController < V1::LikesController
   private
 
   def set_likable
-    @likable = ::Photo.find(params[:story_id])
+    @likable = ::Story.find(params[:story_id])
   end
 end

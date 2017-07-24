@@ -1,6 +1,5 @@
 class V1::User::FollowersController < V1::User::BaseController
 
-
   # GET /photos
   def index
     followers = current_user.followers.page current_page
@@ -12,7 +11,7 @@ class V1::User::FollowersController < V1::User::BaseController
         prev_page: followers.prev_page,
         first_page: followers.first_page?,
         last_page: followers.last_page?
-    }
 
+    }
   end
 end  
