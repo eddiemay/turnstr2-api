@@ -1,6 +1,6 @@
 class V1::User::FollowersController < V1::User::BaseController
 
-  # GET /photos
+  # GET /v1/user/followers
   def index
     followers = current_user.followers.page current_page
     render_success data: {
