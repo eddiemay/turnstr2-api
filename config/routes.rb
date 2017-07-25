@@ -27,10 +27,15 @@ Rails.application.routes.draw do
     resources :photos, controller: 'photos/photos' do
       resources :comments, controller: 'photos/comments', only: [:index, :create, :destroy, :update]
       resources :likes, controller: 'photos/likes', only: [:create, :destroy]
-
     end
       
-
+    resources :members do
+      resources :following, only: [:index]
+      resources :followers, only: [:index]
+      resources :family, only: [:index]
+      resources :follow, only: [:create] 
+      resources :unfollow, only: [:create] 
+    end
 
     namespace :user do
       resources :followers, only: [:index]
