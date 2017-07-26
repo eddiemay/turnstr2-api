@@ -38,6 +38,8 @@ Rails.application.routes.draw do
     end
 
     namespace :user do
+      resources :fave5, only: [:index]
+      resources :general, only: [:index]
       resources :followers, only: [:index]
       resources :following, only: [:index]
       resources :family, only: [:index]
