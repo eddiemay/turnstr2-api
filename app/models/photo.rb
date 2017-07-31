@@ -2,6 +2,7 @@ class Photo < ApplicationRecord
 	include CanBeLiked
 	include CanBeCommented
 	belongs_to :album
+	delegate :user, to: :album
 
 	has_many :comments, as: :commentable
 	has_many :likes, as: :likable
