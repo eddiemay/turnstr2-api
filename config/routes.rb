@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       resources :family, only: [:index]
       resources :follow, only: [:create] 
       resources :unfollow, only: [:create] 
+      resources :stories, only: [:index, :show], controller: 'story/stories'
     end
 
     namespace :user do
