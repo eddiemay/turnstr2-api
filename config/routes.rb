@@ -29,7 +29,7 @@ Rails.application.routes.draw do
       resources :likes, controller: 'photos/likes', only: [:create, :destroy]
     end
       
-    resources :members do
+    resources :members , only: [:index, :show] do
       resources :following, only: [:index]
       resources :followers, only: [:index]
       resources :family, only: [:index]
