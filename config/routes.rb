@@ -36,6 +36,7 @@ Rails.application.routes.draw do
       resources :follow, only: [:create] 
       resources :unfollow, only: [:create] 
       resources :stories, only: [:index, :show], controller: 'story/stories'
+      resources :photos, only: [:index, :show], controller: 'photos/photos'
     end
 
     namespace :user do
