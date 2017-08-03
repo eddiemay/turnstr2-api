@@ -17,7 +17,7 @@ class V1::MembersController < V1::BaseController
 
   # GET /comments/1
   def show
-    render json: {success: true, data: { comment: UserDetailsSerializer.new(@member, current_user: current_user) }}
+    render json: {success: true, data: { comment: ::UserDetailsSerializer.new(@member, current_user: current_user) }}
   end
 
  
