@@ -9,4 +9,8 @@ class UserSerializer < ActiveModel::Serializer
       end
     end
   end
+
+  def following
+  	current_user.following?(object)
+  end	
 end
