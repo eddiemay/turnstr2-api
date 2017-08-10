@@ -37,7 +37,10 @@ Rails.application.routes.draw do
       resources :unfollow, only: [:create] 
       resources :stories, only: [:index, :show], controller: 'story/stories'
       resources :photos, only: [:index, :show], controller: 'photos/photos'
+      resources :favourites, only: [:index, :create]
     end
+    match '/members/:member_id/favourites', to: 'favourites#destroy', via: 'delete', defaults: { id: nil }
+
 
     namespace :user do
       resources :followers, only: [:index]

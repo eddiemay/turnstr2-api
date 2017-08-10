@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170722155545) do
+ActiveRecord::Schema.define(version: 20170810165909) do
 
   create_table "albums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 20170722155545) do
     t.datetime "created_at",                                     null: false
     t.datetime "updated_at",                                     null: false
     t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
+  end
+
+  create_table "favourites", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "favourite_user_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["favourite_user_id", "user_id"], name: "index_favourites_on_favourite_user_id_and_user_id", unique: true, using: :btree
+    t.index ["user_id", "favourite_user_id"], name: "index_favourites_on_user_id_and_favourite_user_id", unique: true, using: :btree
   end
 
   create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

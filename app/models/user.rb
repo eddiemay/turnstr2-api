@@ -26,6 +26,12 @@ class User < ApplicationRecord
   has_many :liked_photo, through: :likes, source: :likable, source_type: 'Photo'
   has_many :liked_story, through: :likes, source: :likable, source_type: 'Story'
 
+  has_and_belongs_to_many :favourites,
+      class_name: "User", 
+      join_table:  :favourites, 
+      foreign_key: :user_id, 
+      association_foreign_key: :favourite_user_id
+
   has_many :active_relationships,  class_name:  "Relationship",
                                    foreign_key: "follower_id",
                                    dependent:   :destroy
