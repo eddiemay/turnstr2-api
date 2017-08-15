@@ -1,4 +1,5 @@
 class V1::FamilyController < V1::BaseController
+  # before_action :set_member
 
   # GET /v1/members/1/family
   def index
@@ -15,4 +16,20 @@ class V1::FamilyController < V1::BaseController
     }
 
   end
+
+  def create
+    
+
+  end
+  
+
+  def destroy
+
+  end
+
+  private
+
+  def set_member
+    @member = User.find params[:member_id]
+  end  
 end  

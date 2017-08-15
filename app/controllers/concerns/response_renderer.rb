@@ -35,7 +35,7 @@ module ResponseRenderer
 
   # Handle 401 errors with custom JSON response
   def render_unauthorized message: nil
-    render json: { success: false, error: message, status_code: 600, link: ERRORS_LINK }, status: 401
+    render json: { success: false, error: message, status_code: 600, link: ERRORS_LINK }, status: 200
   end
 
   # Handle 404 errors with custom JSON response
