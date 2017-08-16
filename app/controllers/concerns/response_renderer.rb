@@ -14,7 +14,7 @@ module ResponseRenderer
   end
 
   # Common method to render error response inside this module
-  def render_error message: I18n.t('errors.e_400'), status_code: 400
+  def render_error message: I18n.t('errors.e_400'), status_code: 200
     render json: { success: false, error: message, status_code: status_code, link: ERRORS_LINK }, status: status_code
   end
 
@@ -25,12 +25,12 @@ module ResponseRenderer
 
   # Handle 400 errors with custom JSON response
   def render_bad_request message: I18n.t('errors.e_400')
-    render_error message: message, status_code: 400
+    render_error message: message, status_code: 200
   end
 
   # Handle 422 errors with custom JSON response
   def render_unprocessable_entity message: nil
-    render_error message: message, status_code: 422
+    render_error message: message, status_code: 222
   end
 
   # Handle 401 errors with custom JSON response
