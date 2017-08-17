@@ -1,10 +1,9 @@
 class V1::FamilyController < V1::BaseController
-  # before_action :set_member
+  before_action :set_member
 
   # GET /v1/members/1/family
   def index
-    user = User.find params[:member_id]
-    @family = user.family.page current_page
+    @family = @member.family.page current_page
     render_success data: {
         family: ActiveModel::Serializer::CollectionSerializer.new(@family, serializer: UserSerializer),
         total_pages: @family.total_pages,
@@ -17,14 +16,23 @@ class V1::FamilyController < V1::BaseController
 
   end
 
+  #POST /v1/members/1/family
   def create
-    
+    if (@member.following?(current_user))
+      current_user.follow(@member)
+      render_success data: {user: UserListSerializer.new(@member) }, message: I18n.t('resource.created', resource: Follow.model_name.human)
+    else
+
+      render_error message: "You can not add someone as family unless he/she follow you"
+    end  
+
 
   end
   
 
   def destroy
-
+    current_user.unfollow(@member)
+    render_success data: {user: UserListSerializer.new(@member) }, message: I18n.t('resource.deleted', resource: Follow.model_name.human)
   end
 
   private

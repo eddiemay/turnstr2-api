@@ -32,7 +32,7 @@ Rails.application.routes.draw do
     resources :members , only: [:index, :show] do
       resources :following, only: [:index]
       resources :followers, only: [:index]
-      resources :family, only: [:index]
+      resources :family, only: [:index, :create, :destroy]
       resources :follow, only: [:create] 
       resources :unfollow, only: [:create] 
       resources :stories, only: [:index, :show], controller: 'story/stories'
