@@ -18,11 +18,13 @@ class V1::FamilyController < V1::BaseController
 
   #POST /v1/members/1/family
   def create
-    if (@member.following?(current_user))
-      current_user.follow(@member)
-      render_success data: {user: UserListSerializer.new(@member) }, message: I18n.t('resource.created', resource: Follow.model_name.human)
-    else
+    
 
+    if (@member.following?(current_user))
+      current_user.follow(@member) unless current_user.following?(@member) 
+      render_success data: {user: UserListSerializer.new(@member) }, message: I18n.t('resource.created', resource: Follow.model_name.human)
+    
+    else
       render_error message: "You can not add someone as family unless he/she follow you"
     end  
 
