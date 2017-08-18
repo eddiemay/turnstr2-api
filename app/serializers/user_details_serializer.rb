@@ -1,5 +1,5 @@
 class UserDetailsSerializer < UserSerializer
-	attributes :following, :following_me, :family_member
+	attributes :following, :following_me, :family_member, :favourite
   def following
   	@instance_options[:current_user].following?(object)
   end	
@@ -10,4 +10,8 @@ class UserDetailsSerializer < UserSerializer
   def family_member
   	@instance_options[:current_user].family_member?(object)
   end	
+
+  def favourite
+    @instance_options[:current_user].favourite?(object)
+  end  
 end

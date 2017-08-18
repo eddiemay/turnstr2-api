@@ -72,7 +72,11 @@ class User < ApplicationRecord
   # return true if other user added as family to current user
   def family_member?(other_user)
     family.include?(other_user)
-  end  
+  end 
+
+  def favourite?(other_user)
+    favourites.include?(other_user)
+  end 
 
 
   def password_reset_expired?
