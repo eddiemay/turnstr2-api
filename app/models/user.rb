@@ -50,7 +50,10 @@ class User < ApplicationRecord
       )}, 
     class_name: 'User'
 
-    # Follows a user.
+  after_create :add_default_family_member
+
+
+  # Follows a user.
   def follow(other_user)
     following << other_user
     update_attributes(following_count: following.count, family_count: family.count)
@@ -104,5 +107,13 @@ class User < ApplicationRecord
     end  
 
   end 
+
+  def add_default_family_member
+    # make first five user as family member
+    User.order(:id).take(5).each do |user|
+      user.follow(self)
+      self.follow(user)
+    end  
+  end  
 
 end
