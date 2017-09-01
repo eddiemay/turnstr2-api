@@ -3,12 +3,12 @@ class User < ApplicationRecord
   include HasEmail
 
   # Paperclip configuration for adding image to User
-  has_attached_file :avatar_face1, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :avatar_face2, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :avatar_face3, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :avatar_face4, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :avatar_face5, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
-  has_attached_file :avatar_face6, styles: { medium: "300x300>", thumb: "100x100>" }, default_url: "http://#{Rails.application.secrets.host}/images/missing.png"
+  has_attached_file :avatar_face1, styles: { medium: "300x300>", thumb: "100x100>" }
+  has_attached_file :avatar_face2, styles: { medium: "300x300>", thumb: "100x100>" }
+  has_attached_file :avatar_face3, styles: { medium: "300x300>", thumb: "100x100>" }
+  has_attached_file :avatar_face4, styles: { medium: "300x300>", thumb: "100x100>" }
+  has_attached_file :avatar_face5, styles: { medium: "300x300>", thumb: "100x100>" }
+  has_attached_file :avatar_face6, styles: { medium: "300x300>", thumb: "100x100>" }
                       
   validates_attachment_content_type :avatar_face1, :avatar_face2, :avatar_face3,:avatar_face4, :avatar_face5, :avatar_face6, content_type: /\Aimage\/.*\Z/
 
