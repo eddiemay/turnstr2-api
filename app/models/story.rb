@@ -23,9 +23,9 @@ class Story < ApplicationRecord
   has_attached_file :face5_media, styles: { thumb: "300x300>"}
   has_attached_file :face6_media, styles: { thumb: "300x300>"}
 
-  validates :face1_media, :face2_media, :face3_media, :face4_media, attachment_presence: true
-  validates_attachment_content_type :face1_media, :face2_media, :face3_media, :face4_media, content_type: ['image/jpeg', 'image/png', 'video/mp4']
-  validates_attachment_content_type :face1_video_thumb, :face2_video_thumb, :face3_video_thumb, :face4_video_thumb, content_type: ['image/jpeg', 'image/png']
+  validates :face1_media, attachment_presence: true
+  validates_attachment_content_type :face1_media, :face2_media, :face3_media, :face4_media, :face5_media, :face6_media, content_type: ['image/jpeg', 'image/png', 'video/mp4']
+  validates_attachment_content_type :face1_video_thumb, :face2_video_thumb, :face3_video_thumb, :face4_video_thumb, :face5_video_thumb, :face6_video_thumb, content_type: ['image/jpeg', 'image/png']
 
   before_face1_media_post_process :is_image_face1_media?
   before_face2_media_post_process :is_image_face2_media?
