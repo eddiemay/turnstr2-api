@@ -54,8 +54,9 @@ Rails.application.routes.draw do
         end  
       end  
       resources :stories do
-        resources :comments, controller: 'story/comments', only: [:index]
-      end  
+        resources :comments, controller: 'story/comments', only: [:index]        
+      end
+      post '/stories/arrange', to: 'stories#arrange'  
     end  
 
   end

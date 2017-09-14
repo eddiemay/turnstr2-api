@@ -46,6 +46,18 @@ class V1::User::StoriesController < V1::User::BaseController
     render json: {success: true, message: 'Story deleted successfully', data: { story: StorySerializer.new(@story) }}
   end
 
+  # POST /user/stories
+  def arrange
+    current_user.stories.update_all(sequence: 0)
+    ids = params[:ids].split(',')
+    ids.each_with_index do |id, index|
+      story = current_user.stories.find_by(id: id)
+      story.update(sequence: ids.count - index)
+    end  
+    render json: {success: true, message: 'Story arranged successfully', data: {}}
+
+  end  
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_story
