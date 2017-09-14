@@ -3,7 +3,7 @@ class V1::Story::StoriesController < V1::Story::BaseController
   before_action :set_story, only: [:show]
   # GET /stories
   def index
-    @stories = @member.present? ? (@member.stories.page current_page) : (::Story.page current_page)
+    @stories = @member.present? ? (@member.stories.reorder('sequence desc', 'updated_at desc').page(current_page)) : (::Story.page current_page)
     render_success data: {
         stories: ActiveModel::Serializer::CollectionSerializer.new(@stories, serializer: StorySerializer),
         total_pages: @stories.total_pages,
