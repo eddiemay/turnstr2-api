@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170913185142) do
+ActiveRecord::Schema.define(version: 20170919161447) do
 
   create_table "albums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -53,6 +53,16 @@ ActiveRecord::Schema.define(version: 20170913185142) do
     t.index ["likable_type", "likable_id"], name: "index_likes_on_likable_type_and_likable_id", using: :btree
     t.index ["user_id", "likable_type", "likable_id"], name: "index_likes_on_user_id_and_likable_type_and_likable_id", unique: true, using: :btree
     t.index ["user_id"], name: "index_likes_on_user_id", using: :btree
+  end
+
+  create_table "live_sessions", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.string   "session_id"
+    t.boolean  "completed",  default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.index ["session_id"], name: "index_live_sessions_on_session_id", using: :btree
+    t.index ["user_id"], name: "index_live_sessions_on_user_id", using: :btree
   end
 
   create_table "photos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -203,6 +213,7 @@ ActiveRecord::Schema.define(version: 20170913185142) do
   add_foreign_key "albums", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "likes", "users"
+  add_foreign_key "live_sessions", "users"
   add_foreign_key "photos", "albums"
   add_foreign_key "relationships", "users", column: "followed_id"
   add_foreign_key "relationships", "users", column: "follower_id"

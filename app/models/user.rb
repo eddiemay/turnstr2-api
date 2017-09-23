@@ -26,6 +26,9 @@ class User < ApplicationRecord
   has_many :liked_photo, through: :likes, source: :likable, source_type: 'Photo'
   has_many :liked_story, through: :likes, source: :likable, source_type: 'Story'
 
+  has_one :live_session, -> { where('completed = ?', false).order("created_at DESC") }
+
+
   has_and_belongs_to_many :favourites,
       class_name: "User", 
       join_table:  :favourites, 
@@ -114,6 +117,12 @@ class User < ApplicationRecord
       user.follow(self)
       self.follow(user)
     end  
-  end  
+  end
+
+  def create_live_session
+    # don't create another live session if one already there
+    return live_session if live_session.present?
+
+  end
 
 end
