@@ -17,8 +17,6 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :password, length: {:within => 8..20}, confirmation: true, :if => lambda{ !password.nil? }
 
-    attr_accessor :ids
-
   has_many :albums
   has_many :photos, through: :albums
   has_many :stories
