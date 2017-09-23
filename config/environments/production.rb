@@ -1,4 +1,6 @@
 Rails.application.configure do
+  config.ids = [1,2,3,5,94]
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.

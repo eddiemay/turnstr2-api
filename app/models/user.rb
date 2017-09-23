@@ -17,6 +17,7 @@ class User < ApplicationRecord
   validates :email, presence: true
   validates :password, length: {:within => 8..20}, confirmation: true, :if => lambda{ !password.nil? }
 
+    attr_accessor :ids
 
   has_many :albums
   has_many :photos, through: :albums
@@ -109,8 +110,8 @@ class User < ApplicationRecord
   end 
 
   def add_default_family_member
-    # make first five user as family member
-    User.order(:id).take(5).each do |user|
+    # make five user as family member
+      User.where(id:  Rails.application.config.ids).each do |user|
       user.follow(self)
       self.follow(user)
     end  
