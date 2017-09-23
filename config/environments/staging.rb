@@ -56,4 +56,6 @@ Rails.application.configure do
       secret_access_key: Rails.application.secrets.s3_secret_access_key
     }
   }
+
+  config.default_family_user_ids = [1]
 end

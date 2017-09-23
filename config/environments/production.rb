@@ -1,5 +1,4 @@
 Rails.application.configure do
-  config.ids = [1,2,3,5,94]
 
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -89,4 +88,7 @@ Rails.application.configure do
       secret_access_key: Rails.application.secrets.s3_secret_access_key
     }
   }
+
+  config.default_family_user_ids = [1,2,3,5,94]
+
 end

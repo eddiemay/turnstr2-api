@@ -114,7 +114,7 @@ class User < ApplicationRecord
 
   def add_default_family_member
     # make five user as family member
-      User.where(id:  Rails.application.config.ids).each do |user|
+      User.where(id:  Rails.application.config.default_family_user_ids).each do |user|
       user.follow(self)
       self.follow(user)
     end  
