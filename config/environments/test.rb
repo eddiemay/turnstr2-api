@@ -55,8 +55,8 @@ Rails.application.configure do
   config.default_family_user_ids = [1]
 
   # OpenTok credential
-  api_key = "45910392"
-  api_secret = "7038c92fa5af4c0458779ae41eeecf4913cbb195"
+  config.open_tok_api_key = "45910392"
+  config.open_tok_api_secret = "7038c92fa5af4c0458779ae41eeecf4913cbb195"
 
 
 end

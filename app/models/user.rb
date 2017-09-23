@@ -122,12 +122,9 @@ class User < ApplicationRecord
     # don't create another live session if one already there
     return live_session if live_session.present?
 
-    opentok = OpenTok::OpenTok.new api_key, api_secret
+    opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
     session = opentok.create_session :media_mode => :routed
-    session_id = session.session_id
-
-
-
+    LiveSession.create({session_id: session.session_id, user_id: self.id})
   end
 
 end
