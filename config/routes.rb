@@ -56,8 +56,9 @@ Rails.application.routes.draw do
       resources :stories do
         resources :comments, controller: 'story/comments', only: [:index]        
       end
-      # Live stream 
+      # Live stream
       resource :live_session, controller: 'live_session', only: [:show, :create, :destroy]
+      resources :devices, only: [:index, :create, :destroy]
       post '/stories/arrange', to: 'stories#arrange'  
     end  
 

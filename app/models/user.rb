@@ -24,6 +24,7 @@ class User < ApplicationRecord
   has_many :likes
   has_many :liked_photo, through: :likes, source: :likable, source_type: 'Photo'
   has_many :liked_story, through: :likes, source: :likable, source_type: 'Story'
+  has_many :devices, class_name: 'UserDevice', dependent: :destroy
 
   has_one :live_session, -> { where('completed = ?', false).order("created_at DESC") }
 

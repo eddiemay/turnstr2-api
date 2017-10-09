@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170919161447) do
+ActiveRecord::Schema.define(version: 20171009154254) do
 
   create_table "albums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -151,6 +151,18 @@ ActiveRecord::Schema.define(version: 20170919161447) do
     t.index ["user_id"], name: "index_stories_on_user_id", using: :btree
   end
 
+  create_table "user_devices", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.string   "device_udid"
+    t.string   "device_push_token"
+    t.string   "device_name"
+    t.string   "device_ios"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["device_udid"], name: "index_user_devices_on_device_udid", using: :btree
+    t.index ["user_id"], name: "index_user_devices_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
     t.string   "username"
@@ -218,4 +230,5 @@ ActiveRecord::Schema.define(version: 20170919161447) do
   add_foreign_key "relationships", "users", column: "followed_id"
   add_foreign_key "relationships", "users", column: "follower_id"
   add_foreign_key "stories", "users"
+  add_foreign_key "user_devices", "users"
 end
