@@ -8,8 +8,9 @@ class V1::Member::InviteController < V1::BaseController
       begin
         n = Rpush::Apns::Notification.new
         n.app = Rpush::Apns::App.find_by_name("ios_app")
-        n.device_token = @member.devices[0].device_push_token
-        n.alert = "hi mom!"
+        # n.device_token = @member.devices[0].device_push_token
+        n.device_token = '1aad3c4933ea02146e65fbbf425aa0401f8218b6114fd6c11e8ffb34e96bac7b'
+        n.alert = "This is just a test notification from Turnstr!"
         n.data = { foo: 'bar' }
         n.save!
 
