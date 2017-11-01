@@ -41,6 +41,6 @@ class V1::User::DevicesController < V1::User::BaseController
 
     # Only allow a trusted parameter "white list" through.
     def device_params
-      params.fetch(:device, {}).permit(:device_udid, :device_push_token, :device_name, :device_ios)
+      params.fetch(:device, {}).permit(:device_udid, :device_push_token, :device_name, :device_ios, :voip_token)
     end
 end
