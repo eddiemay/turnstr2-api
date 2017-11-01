@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       resources :stories, only: [:index, :show], controller: 'story/stories'
       resources :photos, only: [:index, :show], controller: 'photos/photos'
       resources :favourites, only: [:index, :create]
+      resources :invite, only: [:create], controller: 'member/invite'
     end
     match '/members/:member_id/favourites', to: 'favourites#destroy', via: 'delete', defaults: { id: nil }
 
