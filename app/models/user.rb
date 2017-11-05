@@ -128,4 +128,41 @@ class User < ApplicationRecord
     LiveSession.create({session_id: session.session_id, user_id: self.id})
   end
 
+
+  def invite_users_to_my_live_session(invitees)
+    return false if live_session.blank?
+
+    User.where(id: invitees).each do |user|
+
+      # ignore if device token not there
+      next if user.devices[0]&.device_push_token.blank?
+
+      begin
+        n = Rpush::Apns::Notification.new
+        n.app = Rpush::Apns::App.find_by_name("ios_app")
+        n.device_token = user.devices[0].voip_token
+        n.alert = "Invitation from #{self.first_name} to join go live"
+        n.data = {
+            caller_first_name: self.first_name,
+            caller_last_name: self.last_name,
+            caller_tokbox_session_id: self.live_session.session_id,
+            caller_id: self.id,
+            sender_id: user.id
+        }
+        n.save!
+      rescue ActiveRecord::RecordInvalid => ex
+        errors.add(:base, ex.message)
+      end
+
+      begin
+        Rpush.push
+        Rpush.apns_feedback
+      rescue Exception => ex
+        errors.add(:base, ex.message)
+      end
+    end
+
+  end
+
+
 end
