@@ -12,10 +12,10 @@ class V1::Member::InviteController < V1::BaseController
     end
 
     # ignore if device token not there
-    if current_user.live_session.blank?
-      render_unprocessable_entity message: 'Current user do not have tokbox session'
-      return
-    end
+    #if current_user.live_session.blank?
+      #render_unprocessable_entity message: 'Current user do not have tokbox session'
+      #return
+    #end
 
 
     begin
@@ -26,7 +26,7 @@ class V1::Member::InviteController < V1::BaseController
       n.data = {
           caller_first_name: current_user.first_name,
           caller_last_name: current_user.last_name,
-          caller_tokbox_session_id: current_user.live_session.session_id,
+          #caller_tokbox_session_id: current_user.live_session.session_id,
           caller_id: current_user.id,
           sender_id: @member.id
       }
