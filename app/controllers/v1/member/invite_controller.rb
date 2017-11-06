@@ -11,6 +11,12 @@ class V1::Member::InviteController < V1::BaseController
       return
     end
 
+    # ignore if device token not there
+    if current_user.live_session.blank?
+      render_unprocessable_entity message: 'Current user do not have tokbox session'
+      return
+    end
+
 
     begin
       n = Rpush::Apns::Notification.new
