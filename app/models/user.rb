@@ -135,7 +135,7 @@ class User < ApplicationRecord
     User.where(id: invitees).each do |user|
 
       # ignore if device token not there
-      next if user.devices[0]&.device_push_token.blank?
+      next if user.devices[0]&.voip_token.blank?
 
       begin
         n = Rpush::Apns::Notification.new
