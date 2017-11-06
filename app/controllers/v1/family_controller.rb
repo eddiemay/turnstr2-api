@@ -3,7 +3,15 @@ class V1::FamilyController < V1::BaseController
 
   # GET /v1/members/1/family
   def index
-    @family = @member.family.page current_page
+    # temporarily, we are shipping hardcoded users so video call can be done
+    @family = User.where(email: [
+        'vikesh@gmail.com',
+        'saini@ankit.com',
+        'nilay1@devzila.com'
+    ]).page current_page
+
+    # uncomment following line when patch work no longer needed
+    # @family = @member.family.page current_page
     render_success data: {
         family: ActiveModel::Serializer::CollectionSerializer.new(@family, serializer: UserSerializer),
         total_pages: @family.total_pages,
