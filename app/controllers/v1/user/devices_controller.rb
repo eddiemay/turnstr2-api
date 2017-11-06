@@ -12,7 +12,7 @@ class V1::User::DevicesController < V1::User::BaseController
 
   # POST /user/devices
   def create
-    @device = current_user.devices.find_or_initialize_by(device_udid: device_params[:device_udid])
+    @device = current_user.devices.find_or_initialize_by(device_udid: device_params[:device_udid], user_id: current_user.id)
     @device.assign_attributes(device_params)
 
     if @device.save

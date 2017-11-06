@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171101174306) do
+ActiveRecord::Schema.define(version: 20171106183042) do
 
   create_table "albums", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
@@ -221,6 +221,7 @@ ActiveRecord::Schema.define(version: 20171101174306) do
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
     t.string   "voip_token"
+    t.index ["device_udid", "user_id"], name: "index_user_devices_on_device_udid_and_user_id", unique: true, using: :btree
     t.index ["device_udid"], name: "index_user_devices_on_device_udid", using: :btree
     t.index ["user_id"], name: "index_user_devices_on_user_id", using: :btree
   end
