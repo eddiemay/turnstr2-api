@@ -12,7 +12,8 @@ class V1::User::DevicesController < V1::User::BaseController
 
   # POST /user/devices
   def create
-    @device = current_user.devices.new(device_params)
+    @device = current_user.devices.find_or_initialize_by(device_udid: device_params[:device_udid])
+    @device.assign_attributes(device_params)
 
     if @device.save
       render_success data: {device: DeviceSerializer.new(@device)}, message: I18n.t('resource.crated', resource: UserDevice.model_name.human)
