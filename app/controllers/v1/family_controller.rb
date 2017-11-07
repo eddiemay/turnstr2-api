@@ -7,7 +7,8 @@ class V1::FamilyController < V1::BaseController
     @family = User.where(email: [
         'vikesh@gmail.com',
         'saini@ankit.com',
-        'nilay1@devzila.com'
+        'nilay1@devzila.com',
+        'rocky@gmail.com'
     ]).page current_page
 
     # uncomment following line when patch work no longer needed
