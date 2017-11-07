@@ -125,7 +125,8 @@ class User < ApplicationRecord
 
     opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
     session = opentok.create_session :media_mode => :routed
-    LiveSession.create({session_id: session.session_id, user_id: self.id})
+    token =  opentok.generate_token session.session_id
+    LiveSession.create({session_id: session.session_id, user_id: self.id, token: token})
   end
 
 
@@ -137,6 +138,9 @@ class User < ApplicationRecord
       # ignore if device token not there
       next if user.devices[0]&.voip_token.blank?
 
+      opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
+      tok_box_token = opentok.generate_token self.live_session.session_id
+
       begin
         n = Rpush::Apns::Notification.new
         n.app = Rpush::Apns::App.find_by_name("ios_app")
@@ -146,6 +150,7 @@ class User < ApplicationRecord
             caller_first_name: self.first_name,
             caller_last_name: self.last_name,
             caller_tokbox_session_id: self.live_session.session_id,
+            token: tok_box_token,
             caller_id: self.id,
             sender_id: user.id
         }
