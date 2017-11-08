@@ -5,7 +5,7 @@ class V1::User::FamilyController < V1::User::BaseController
   def index
     @family = current_user.family.page current_page
     render_success data: {
-        family: ActiveModel::Serializer::CollectionSerializer.new(@family, serializer: UserListSerializer),
+        family: ActiveModel::Serializer::CollectionSerializer.new(@family, serializer: UserSerializer),
         total_pages: @family.total_pages,
         current_page: @family.current_page,
         next_page: @family.next_page,
