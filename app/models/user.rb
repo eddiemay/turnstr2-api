@@ -134,7 +134,7 @@ class User < ApplicationRecord
 
     opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
     token =  opentok.generate_token session_id
-    LiveSession.create({session_id: session.session_id, user_id: self.id, token: token})
+    LiveSession.create({session_id: session_id, user_id: self.id, token: token})
   end
 
 
