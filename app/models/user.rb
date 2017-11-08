@@ -129,6 +129,14 @@ class User < ApplicationRecord
     LiveSession.create({session_id: session.session_id, user_id: self.id, token: token})
   end
 
+  def create_tokbox_token session_id
+    return live_session if live_session.present?
+
+    opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
+    token =  opentok.generate_token session_id
+    LiveSession.create({session_id: session.session_id, user_id: self.id, token: token})
+  end
+
 
   def invite_users_to_my_live_session(invitees)
     return false if live_session.blank?
