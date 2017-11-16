@@ -4,12 +4,14 @@ class V1::FamilyController < V1::BaseController
   # GET /v1/members/1/family
   def index
     # temporarily, we are shipping hardcoded users so video call can be done
-    @family = User.where(email: [
-        'vikesh@gmail.com',
-        'saini@ankit.com',
-        'nilay1@devzila.com',
-        'rocky@gmail.com'
-    ]).page current_page
+    ## @family = User.where(email: [
+    ##    'vikesh@gmail.com',
+    ##    'saini@ankit.com',
+    ##    'nilay1@devzila.com',
+    ##    'rocky@gmail.com'
+    ##]).page current_page
+
+    @family = User.with_voip_token.page current_page
 
     # uncomment following line when patch work no longer needed
     # @family = @member.family.page current_page

@@ -53,6 +53,8 @@ class User < ApplicationRecord
       )}, 
     class_name: 'User'
 
+  scope :with_voip_token, -> {joins(:devices).distinct}
+
   after_create :add_default_family_member
 
 
