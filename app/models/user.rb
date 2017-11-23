@@ -124,13 +124,10 @@ class User < ApplicationRecord
   def create_live_session
     # don't create another live session if one already there
     if live_session.present?
-      puts "======== Live session present ======"
-      puts "======== #{(Time.now - live_session.updated_at).to_i} ==========="
+      # Use same session if it is not older than 6 hours
       if (Time.now - live_session.updated_at).to_i < (3600*6)
-        puts "======== Touching Live session ==========="
         live_session.touch
         return live_session
-        puts "======== returned ============="
       end
     end
 
@@ -149,7 +146,7 @@ class User < ApplicationRecord
   end
 
 
-  def invite_users_to_my_live_session(invitees)
+  def invite_users_to_my_live_session(invitees, call_type)
     return false if live_session.blank?
 
     User.where(id: invitees).each do |user|
@@ -171,7 +168,8 @@ class User < ApplicationRecord
             caller_tokbox_session_id: self.live_session.session_id,
             token: tok_box_token,
             caller_id: self.id,
-            sender_id: user.id
+            sender_id: user.id,
+            call_type: call_type
         }
         n.save!
       rescue ActiveRecord::RecordInvalid => ex
