@@ -186,5 +186,45 @@ class User < ApplicationRecord
 
   end
 
+  def live_broadcast_notification
+    opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
+    tok_box_token = opentok.generate_token self.live_session.session_id, :role => :subscriber  
+
+
+
+    # followers.each do |follower|
+    # Only followers need to be notified. Currently we are notifying all user
+    User.all.each do |follower|
+      next if follower.devices[0]&.voip_token.blank? || follower.id == self.id
+
+      begin
+        n = Rpush::Apns::Notification.new
+        n.app = Rpush::Apns::App.find_by_name("ios_app")
+        n.device_token = follower.devices[0].voip_token
+        n.alert = "#{self.first_name} is live now"
+        n.data = {
+            caller_first_name: self.first_name,
+            caller_last_name: self.last_name,
+            caller_tokbox_session_id: self.live_session.session_id,
+            token: tok_box_token,
+            caller_id: self.id,
+            sender_id: follower.id
+        }
+        n.save!
+      rescue ActiveRecord::RecordInvalid => ex
+        errors.add(:base, ex.message)
+      end
+    end
+
+    begin
+      Rpush.push
+      Rpush.apns_feedback
+    rescue Exception => ex
+      errors.add(:base, ex.message)
+    end
+
+    true
+
+  end  
 
 end

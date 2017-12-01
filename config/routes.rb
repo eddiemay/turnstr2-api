@@ -59,6 +59,7 @@ Rails.application.routes.draw do
       end
       # Live stream
       resource :live_session, controller: 'live_session', only: [:show, :create, :destroy]
+      resources :live_notify, only: [:create]
       resources :devices, only: [:index, :create, :destroy]
       post '/stories/arrange', to: 'stories#arrange'  
     end  
