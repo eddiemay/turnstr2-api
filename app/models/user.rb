@@ -208,7 +208,8 @@ class User < ApplicationRecord
             caller_tokbox_session_id: self.live_session.session_id,
             token: tok_box_token,
             caller_id: self.id,
-            sender_id: follower.id
+            sender_id: follower.id,
+            call_type: 'go_live_subscription'
         }
         n.save!
       rescue ActiveRecord::RecordInvalid => ex
