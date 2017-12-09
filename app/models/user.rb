@@ -161,6 +161,7 @@ class User < ApplicationRecord
         n = Rpush::Apns::Notification.new
         n.app = Rpush::Apns::App.find_by_name("ios_app")
         n.device_token = user.devices[0].voip_token
+        n.content_available = true
         n.alert = "Invitation from #{self.first_name} to join go live"
         n.data = {
             caller_first_name: self.first_name,
@@ -201,6 +202,7 @@ class User < ApplicationRecord
         n = Rpush::Apns::Notification.new
         n.app = Rpush::Apns::App.find_by_name("ios_app")
         n.device_token = follower.devices[0].voip_token
+        n.content_available = true
         n.alert = "#{self.first_name} is live now"
         n.data = {
             caller_first_name: self.first_name,
