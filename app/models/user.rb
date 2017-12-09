@@ -190,16 +190,10 @@ class User < ApplicationRecord
   def live_broadcast_notification
     opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
     tok_box_token = opentok.generate_token self.live_session.session_id, :role => :subscriber
-
     firebase_server_api_key = "AAAA8RDsLvc:APA91bEaDPTpc5jNOEOQbz8jjPaBA2_sgzsXK-XzJbffSmayzutm49ztX2Sh70ndF1Q5TINT0Dcxo14jF4Rub32BqAC9aaKtte1UToeTHCDXlbCMUQ_vlIzCzo4MnXu8FFrUo8D_undf"
 
-    registration_ids = []
-    # followers.each do |follower|
     # Only followers need to be notified. Currently we are notifying all user
-    User.all.each do |follower|
-      next if follower.devices[0]&.device_push_token.blank? || follower.id == self.id
-     registration_ids << follower.devices[0].device_push_token
-    end
+    registration_ids UserDevice.where("user_id !=  #{self.id}")
 
     data = {
         caller_first_name: self.first_name,
@@ -222,10 +216,7 @@ class User < ApplicationRecord
                   ),
                   :headers => {"Authorization" => "key=#{firebase_server_api_key}", "Content-Type" => "application/json"})
 
-
-
     true
-
   end
 
 end
