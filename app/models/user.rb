@@ -189,6 +189,37 @@ class User < ApplicationRecord
 
   def live_broadcast_notification
     opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
+    tok_box_token = opentok.generate_token self.live_session.session_id, :role => :subscriber
+
+
+    fcm = FCM.new("my_server_key")
+    registration_ids = []
+    # followers.each do |follower|
+    # Only followers need to be notified. Currently we are notifying all user
+    User.all.each do |follower|
+      next if follower.devices[0]&.device_push_token.blank? || follower.id == self.id
+     registration_ids << follower.devices[0].device_push_token
+    end
+
+    data = {
+        caller_first_name: self.first_name,
+        caller_last_name: self.last_name,
+        caller_tokbox_session_id: self.live_session.session_id,
+        token: tok_box_token,
+        caller_id: self.id,
+        call_type: 'go_live_subscription'
+    }
+    options = {data: data, collapse_key: "go_live_subscription"}
+    response = fcm.send(registration_ids, options)
+
+
+    true
+
+  end
+
+
+  def live_broadcast_notification_old
+    opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
     tok_box_token = opentok.generate_token self.live_session.session_id, :role => :subscriber  
 
 
