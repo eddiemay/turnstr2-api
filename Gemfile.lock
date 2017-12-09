@@ -272,6 +272,7 @@ DEPENDENCIES
   enumerize
   fb_graph2
   fcm
+  httparty
   jwt
   kaminari
   listen (~> 3.0.5)

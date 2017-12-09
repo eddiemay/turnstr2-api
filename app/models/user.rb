@@ -191,8 +191,8 @@ class User < ApplicationRecord
     opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
     tok_box_token = opentok.generate_token self.live_session.session_id, :role => :subscriber
 
+    firebase_server_api_key = "AAAA8RDsLvc:APA91bEaDPTpc5jNOEOQbz8jjPaBA2_sgzsXK-XzJbffSmayzutm49ztX2Sh70ndF1Q5TINT0Dcxo14jF4Rub32BqAC9aaKtte1UToeTHCDXlbCMUQ_vlIzCzo4MnXu8FFrUo8D_undf"
 
-    fcm = FCM.new("AAAA8RDsLvc:APA91bEaDPTpc5jNOEOQbz8jjPaBA2_sgzsXK-XzJbffSmayzutm49ztX2Sh70ndF1Q5TINT0Dcxo14jF4Rub32BqAC9aaKtte1UToeTHCDXlbCMUQ_vlIzCzo4MnXu8FFrUo8D_undf")
     registration_ids = []
     # followers.each do |follower|
     # Only followers need to be notified. Currently we are notifying all user
@@ -209,15 +209,33 @@ class User < ApplicationRecord
         caller_id: self.id,
         call_type: 'go_live_subscription'
     }
-    options = {data: data, collapse_key: "go_live_subscription"}
-    response = fcm.send(registration_ids, options)
 
-    puts "================="
-    puts response
+
+    HTTParty.post('https://fcm.googleapis.com/fcm/send',
+                  :body => JSON.generate(
+                      {
+                          registration_ids: registration_ids,
+                          priority: 'high',
+                          notification: {title: "woow", body:"awesome"},
+                          data: data
+                      }
+                  ),
+                  :headers => {"Authorization" => "key=#{firebase_server_api_key}", "Content-Type" => "application/json"})
+
 
 
     true
 
+  end
+
+
+  def self.test
+    firebase_server_api_key = "AAAA8RDsLvc:APA91bEaDPTpc5jNOEOQbz8jjPaBA2_sgzsXK-XzJbffSmayzutm49ztX2Sh70ndF1Q5TINT0Dcxo14jF4Rub32BqAC9aaKtte1UToeTHCDXlbCMUQ_vlIzCzo4MnXu8FFrUo8D_undf"
+    token = "d_NjCftPchQ:APA91bGrtFqu9w3sSPIj0SSw_VfJzE2ulCT_grWQsBUpCTFzwgllKIS1I5D6krbq06nByTjQeK57blazAA2dFspOV1AVjQjVrgcsWBDxhVr3WEsARCqRJ4rK2J7hY6X-xtJbGXr3C3Ll"
+
+    HTTParty.post('https://fcm.googleapis.com/fcm/send',
+                  :body => JSON.generate({registration_ids: [token], priority: 'high', notification: {title: "woow", body:"awesome"}}),
+                  :headers => {"Authorization" => "key=#{firebase_server_api_key}", "Content-Type" => "application/json"})
   end
 
 
