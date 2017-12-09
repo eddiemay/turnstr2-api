@@ -56,8 +56,6 @@ gem "opentok", "~> 2.4.1"
 
 gem 'rpush'
 
-gem 'fcm'
-
 gem 'httparty'
 
 group :development, :test do
