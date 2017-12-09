@@ -212,6 +212,9 @@ class User < ApplicationRecord
     options = {data: data, collapse_key: "go_live_subscription"}
     response = fcm.send(registration_ids, options)
 
+    puts "================="
+    puts response
+
 
     true
 
