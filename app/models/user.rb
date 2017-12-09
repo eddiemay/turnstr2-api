@@ -192,7 +192,7 @@ class User < ApplicationRecord
     tok_box_token = opentok.generate_token self.live_session.session_id, :role => :subscriber
 
 
-    fcm = FCM.new("my_server_key")
+    fcm = FCM.new("AAAA8RDsLvc:APA91bEaDPTpc5jNOEOQbz8jjPaBA2_sgzsXK-XzJbffSmayzutm49ztX2Sh70ndF1Q5TINT0Dcxo14jF4Rub32BqAC9aaKtte1UToeTHCDXlbCMUQ_vlIzCzo4MnXu8FFrUo8D_undf")
     registration_ids = []
     # followers.each do |follower|
     # Only followers need to be notified. Currently we are notifying all user
