@@ -58,4 +58,4 @@ production:
   <<: *default
   database: turnstr2-api
   username: deploy
-  password: Admin123
+  password: QAR7VZEL
