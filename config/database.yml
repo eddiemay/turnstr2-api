@@ -57,5 +57,5 @@ staging:
 production:
   <<: *default
   database: turnstr2-api
-  username: deploy
+  username: turnstr2_api
   password: QAR7VZEL
