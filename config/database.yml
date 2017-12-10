@@ -56,6 +56,6 @@ staging:
 
 production:
   <<: *default
-  database: turnstr2-api_production
-  username: turnstr2-api
-  password: <%= ENV['TURNSTR-API_DATABASE_PASSWORD'] %>
+  database: turnstr2-api
+  username: deploy
+  password: Admin123
