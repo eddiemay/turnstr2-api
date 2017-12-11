@@ -8,7 +8,7 @@ class V1::PingController < ApplicationController
     end
 
 
-    render plain: request.headers['HTTP_AUTH_TOKEN']
+    render json: headers
 
   end
 
