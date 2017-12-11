@@ -2,13 +2,13 @@ class V1::PingController < ApplicationController
 
   def show
 
-    headers = []
+    h = []
     request.headers.each do |key, value|
-      headers << key
+      h << key
     end
 
 
-    render json: headers
+    render json: h
 
   end
 
