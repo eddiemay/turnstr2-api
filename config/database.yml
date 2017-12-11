@@ -59,3 +59,4 @@ production:
   database: turnstr2_api
   username: turnstr2_api
   password: QAR7VZEL
+  socket: /var/run/mysqld/mysqld.sock
