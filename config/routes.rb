@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get '/ping', to: 'ping#show'
     resource  :sessions,   only:   [:show, :create, :destroy]
     resource :signup, only: [:create]
+    resources :search, only: [:index]
     post '/facebook/login', to: 'facebooks#create'
 
     resources :stories, controller: 'story/stories' do

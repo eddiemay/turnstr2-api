@@ -34,6 +34,10 @@ class Story < ApplicationRecord
   before_face5_media_post_process :is_image_face5_media?
   before_face6_media_post_process :is_image_face6_media?
 
+  scope :search, ->(text){
+    where( " stories.caption LIKE :search", { search: "%#{text.downcase}%"})
+  }
+
   #validations
   
   def is_image_face1_media?

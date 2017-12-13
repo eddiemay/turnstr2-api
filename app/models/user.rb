@@ -57,6 +57,16 @@ class User < ApplicationRecord
 
   after_create :add_default_family_member
 
+  scope :search, ->(text){
+    where(
+        " users.first_name LIKE :search
+          OR users.last_name LIKE :search
+          OR users.username LIKE :search
+        ", { search: "%#{text.downcase}%"}
+    )
+  }
+
+
 
   # Follows a user.
   def follow(other_user)
