@@ -20,6 +20,17 @@ class V1::SessionsController < V1::BaseController
   end
 
 
+  def destroy
+    begin
+      @current_user.devices.find_by(session_id: request.headers['HTTP_AUTH_TOKEN'])&.destroy
+      render_success message: "Logout Successfully", data: {}
+
+    rescue
+      render_unprocessable_entity message: "Failed to delete device"
+    end
+  end
+
+
 
 
 end
