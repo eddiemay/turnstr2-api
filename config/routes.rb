@@ -43,6 +43,8 @@ Rails.application.routes.draw do
     end
     match '/members/:member_id/favourites', to: 'favourites#destroy', via: 'delete', defaults: { id: nil }
 
+    resources :populars, only: [:index]
+
 
     namespace :user do
       resources :followers, only: [:index]
