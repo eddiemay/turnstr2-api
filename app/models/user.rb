@@ -66,6 +66,8 @@ class User < ApplicationRecord
     )
   }
 
+  scope :populars, -> {order("follower_count desc").limit(3)}
+
 
 
   # Follows a user.
