@@ -141,12 +141,22 @@ class User < ApplicationRecord
   end
 
   def create_live_session(session_type = 'video_call')
+    # don't create another live session if one already there
+    tokbox_session = get_live_session(session_type)
+    if tokbox_session.present?
+      # Use same session if it is not older than 6 hours
+      if (Time.now - tokbox_session.updated_at).to_i < (3600*6)
+        tokbox_session.touch
+        return tokbox_session
+      end
+    end
+
     opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
     if session_type == 'go_live'
       # go live session will be recorded always
       session = opentok.create_session :archive_mode => :always, :media_mode => :routed
     else
-      session = opentok.create_session :archive_mode => :always, :media_mode => :routed
+      session = opentok.create_session :media_mode => :routed
     end
     token =  opentok.generate_token session.session_id
     LiveSession.create({session_id: session.session_id, user_id: self.id, token: token, session_type: session_type})
@@ -161,8 +171,7 @@ class User < ApplicationRecord
   end
 
 
-  def invite_users_to_my_live_session(invitees, call_type)
-    return false if live_session.blank?
+  def invite_users_to_my_live_session(invitees, call_type, tokbox_session)
 
     User.where(id: invitees).each do |user|
 
@@ -170,7 +179,7 @@ class User < ApplicationRecord
       next if user.devices[0]&.voip_token.blank?
 
       opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
-      tok_box_token = opentok.generate_token self.live_session.session_id
+      tok_box_token = opentok.generate_token tokbox_session.session_id
 
       begin
         n = Rpush::Apns::Notification.new
@@ -181,7 +190,7 @@ class User < ApplicationRecord
         n.data = {
             caller_first_name: self.first_name,
             caller_last_name: self.last_name,
-            caller_tokbox_session_id: self.live_session.session_id,
+            caller_tokbox_session_id: tokbox_session.session_id,
             token: tok_box_token,
             caller_id: self.id,
             sender_id: user.id,
