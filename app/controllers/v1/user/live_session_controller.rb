@@ -11,7 +11,7 @@ class V1::User::LiveSessionController < V1::User::BaseController
   # POST /user/session
   def create
 
-    if live_session = current_user.create_live_session
+    if live_session = current_user.create_live_session('video_call')
       current_user.reload
       # invite (send push notification) to invitee users so they can join the live session
       current_user.invite_users_to_my_live_session(params[:invitees], params[:call_type])

@@ -119,6 +119,10 @@ class User < ApplicationRecord
     #UserMailer.password_reset(self).deliver_now
   end
 
+  def get_live_session(session_type)
+    live_sessions.where("session_type = :session_type AND completed=0", {session_type: session_type}).order("created_at desc").first
+  end
+
   def create_default_albums
     return if albums.count > 0 
     year = Date.today.year
@@ -136,20 +140,16 @@ class User < ApplicationRecord
     end  
   end
 
-  def create_live_session
-    # don't create another live session if one already there
-    if live_session.present?
-      # Use same session if it is not older than 6 hours
-      if (Time.now - live_session.updated_at).to_i < (3600*6)
-        live_session.touch
-        return live_session
-      end
-    end
-
+  def create_live_session(session_type = 'video_call')
     opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
-    session = opentok.create_session :media_mode => :routed
+    if session_type == 'go_live'
+      # go live session will be recorded always
+      session = opentok.create_session :archive_mode => :always, :media_mode => :routed
+    else
+      session = opentok.create_session :archive_mode => :always, :media_mode => :routed
+    end
     token =  opentok.generate_token session.session_id
-    LiveSession.create({session_id: session.session_id, user_id: self.id, token: token})
+    LiveSession.create({session_id: session.session_id, user_id: self.id, token: token, session_type: session_type})
   end
 
   def create_tokbox_token session_id
