@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171219004451) do
+ActiveRecord::Schema.define(version: 20171224081257) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
@@ -53,6 +53,22 @@ ActiveRecord::Schema.define(version: 20171219004451) do
     t.datetime "updated_at",        null: false
     t.index ["favourite_user_id", "user_id"], name: "index_favourites_on_favourite_user_id_and_user_id", unique: true, using: :btree
     t.index ["user_id", "favourite_user_id"], name: "index_favourites_on_user_id_and_favourite_user_id", unique: true, using: :btree
+  end
+
+  create_table "go_live_videos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "opentok_id"
+    t.string   "event"
+    t.string   "opentok_created_at"
+    t.integer  "duration"
+    t.integer  "partner_id"
+    t.string   "reason"
+    t.string   "opentok_session_id"
+    t.integer  "size"
+    t.string   "status"
+    t.string   "url"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["opentok_session_id"], name: "index_go_live_videos_on_opentok_session_id", using: :btree
   end
 
   create_table "likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resource  :sessions,   only:   [:show, :create, :destroy]
     resource :signup, only: [:create]
     resources :search, only: [:index]
+    resources :opentok_callback, only: [:create]
     post '/facebook/login', to: 'facebooks#create'
 
     resources :stories, controller: 'story/stories' do

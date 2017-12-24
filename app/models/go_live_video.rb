@@ -1,0 +1,2 @@
+class GoLiveVideo < ApplicationRecord
+end
