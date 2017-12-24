@@ -26,6 +26,11 @@ Rails.application.routes.draw do
       resources :likes, controller: 'story/likes', only: [:create, :destroy]
     end
 
+    resources :videos, controller: 'videos/videos', only: [:index] do
+      resources :comments, controller: 'videos/comments', only: [:index, :create, :destroy, :update]
+      resources :likes, controller: 'videos/likes', only: [:create, :destroy]
+    end
+
     resources :photos, controller: 'photos/photos' do
       resources :comments, controller: 'photos/comments', only: [:index, :create, :destroy, :update]
       resources :likes, controller: 'photos/likes', only: [:create, :destroy]
@@ -39,6 +44,7 @@ Rails.application.routes.draw do
       resources :unfollow, only: [:create] 
       resources :stories, only: [:index, :show], controller: 'story/stories'
       resources :photos, only: [:index, :show], controller: 'photos/photos'
+      resources :videos, only: [:index], controller: 'videos/videos'
       resources :favourites, only: [:index, :create]
       resources :invite, only: [:create], controller: 'member/invite'
     end
@@ -52,6 +58,7 @@ Rails.application.routes.draw do
       resources :following, only: [:index]
       resources :family, only: [:index]
       resource :profile, only:   [:show, :update]
+      resources :videos, only: [:index]
       resources :photos, only: [:create]
       resources :albums, only: [:index] do
         resources :photos, only: [:index, :show, :destroy] do
