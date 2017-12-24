@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171224081257) do
+ActiveRecord::Schema.define(version: 20171224120420) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
@@ -68,6 +68,9 @@ ActiveRecord::Schema.define(version: 20171224081257) do
     t.string   "url"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.string   "thumb_url"
+    t.integer  "likes_count"
+    t.integer  "comments_count"
     t.index ["opentok_session_id"], name: "index_go_live_videos_on_opentok_session_id", using: :btree
   end
 

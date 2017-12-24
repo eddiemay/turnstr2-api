@@ -26,7 +26,10 @@ class User < ApplicationRecord
   has_many :liked_story, through: :likes, source: :likable, source_type: 'Story'
   has_many :devices, class_name: 'UserDevice', dependent: :destroy
 
+
   has_one :live_session, -> { where('completed = ?', false).order("created_at DESC") }
+  has_many :live_sessions
+  has_many :video_stories, through: :live_sessions
 
 
   has_and_belongs_to_many :favourites,
