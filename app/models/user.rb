@@ -173,40 +173,47 @@ class User < ApplicationRecord
 
   def invite_users_to_my_live_session(invitees, call_type, tokbox_session)
 
+    # no more than 3 invitees
+    invitees = invitees.first(3)
     User.where(id: invitees).each do |user|
 
-      # ignore if device token not there
-      next if user.devices[0]&.voip_token.blank?
+      # ignore if device is not registered for the user
+      user_device = user.devices[0]
+      next if user_device.blank?
 
       opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
       tok_box_token = opentok.generate_token tokbox_session.session_id
 
+      title = "Invitation from #{self.first_name} to join video call"
+      data = {
+          caller_first_name: self.first_name,
+          caller_last_name: self.last_name,
+          caller_tokbox_session_id: tokbox_session.session_id,
+          token: tok_box_token,
+          caller_id: self.id,
+          sender_id: user.id,
+          call_type: call_type
+      }
+
       begin
-        n = Rpush::Apns::Notification.new
-        n.app = Rpush::Apns::App.find_by_name("ios_app")
-        n.device_token = user.devices[0].voip_token
-        n.content_available = true
-        n.alert = "Invitation from #{self.first_name} to join go live"
-        n.data = {
-            caller_first_name: self.first_name,
-            caller_last_name: self.last_name,
-            caller_tokbox_session_id: tokbox_session.session_id,
-            token: tok_box_token,
-            caller_id: self.id,
-            sender_id: user.id,
-            call_type: call_type
-        }
-        n.save!
+
+        if user_device.device_name == "Android"
+          # make sure Android device has push token
+          next if user_device.device_push_token.blank?
+          PushNotifier.send([user_device.device_push_token], title, data)
+        else
+          # make sure iOS device has voip token
+          next if  user_device.voip_token.blank?
+          PushNotifier.queue_voip(user_device.device_push_token, title, data)
+        end
+
+        # send all queued voip notification
+        PushNotifier.deliver_voip
+
       rescue ActiveRecord::RecordInvalid => ex
         errors.add(:base, ex.message)
       end
 
-      begin
-        Rpush.push
-        Rpush.apns_feedback
-      rescue Exception => ex
-        errors.add(:base, ex.message)
-      end
     end
 
   end
