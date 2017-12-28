@@ -10,8 +10,6 @@ class V1::User::LiveSessionController < V1::User::BaseController
 
   # POST /user/session
   def create
-    render json: params
-    return
 
     if live_session = current_user.create_live_session('video_call')
       # invite (send push notification) to invitee users so they can join the live session
