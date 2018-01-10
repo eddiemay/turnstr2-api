@@ -156,7 +156,8 @@ class User < ApplicationRecord
       # go live session will be recorded always
       session = opentok.create_session :archive_mode => :always, :media_mode => :routed
     else
-      session = opentok.create_session :media_mode => :routed
+      session = opentok.create_session :archive_mode => :always, :media_mode => :routed
+      # session = opentok.create_session :media_mode => :routed
     end
     token =  opentok.generate_token session.session_id
     LiveSession.create({session_id: session.session_id, user_id: self.id, token: token, session_type: session_type})
