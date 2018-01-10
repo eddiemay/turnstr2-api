@@ -145,7 +145,7 @@ class User < ApplicationRecord
     tokbox_session = get_live_session(session_type)
     if tokbox_session.present?
       # Use same session if it is not older than 6 hours
-      if (Time.now - tokbox_session.updated_at).to_i < (3600*6)
+      if (Time.now - tokbox_session.updated_at).to_i < (3600*1)
         tokbox_session.touch
         return tokbox_session
       end
