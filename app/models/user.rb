@@ -27,6 +27,7 @@ class User < ApplicationRecord
   has_many :devices, class_name: 'UserDevice', dependent: :destroy
 
 
+
   has_one :live_session, -> { where('completed = ?', false).order("created_at DESC") }
   has_many :live_sessions
   has_many :video_stories, through: :live_sessions
@@ -46,8 +47,16 @@ class User < ApplicationRecord
                                    dependent:   :destroy
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships, source: :follower
+  has_many :followers_devices, -> (user) {
+    unscope(where: :user_id)
+    .where('user_devices.user_id in
+            (SELECT `users`.id
+            FROM `users`
+            INNER JOIN `relationships` ON `users`.`id` = `relationships`.`follower_id`
+            WHERE `relationships`.`followed_id` = :user_id)', user_id: user.id)
+  }, class_name: 'UserDevice'
 
-  has_many :family, -> (user){ 
+  has_many :family, -> (user){
     unscope(where: :user_id)
     .where('users.id in (
       select followed_id from relationships where follower_id = :user_id and followed_id in ( 
@@ -158,8 +167,7 @@ class User < ApplicationRecord
       # go live session will be recorded always
       session = opentok.create_session :archive_mode => :always, :media_mode => :routed
     else
-      session = opentok.create_session :archive_mode => :always, :media_mode => :routed
-      # session = opentok.create_session :media_mode => :routed
+      session = opentok.create_session :media_mode => :routed
     end
     token =  opentok.generate_token session.session_id
     LiveSession.create({session_id: session.session_id, user_id: self.id, token: token, session_type: session_type})
@@ -227,7 +235,9 @@ class User < ApplicationRecord
     firebase_server_api_key = "AAAA8RDsLvc:APA91bEaDPTpc5jNOEOQbz8jjPaBA2_sgzsXK-XzJbffSmayzutm49ztX2Sh70ndF1Q5TINT0Dcxo14jF4Rub32BqAC9aaKtte1UToeTHCDXlbCMUQ_vlIzCzo4MnXu8FFrUo8D_undf"
 
     # Only followers need to be notified. Currently we are notifying all user
-    registration_ids = UserDevice.where("user_id !=  #{self.id}").pluck(:device_push_token)
+    # registration_ids = UserDevice.where("user_id !=  #{self.id}").pluck(:device_push_token)
+    # registration_ids = UserDevice.where(user_id: u.followers.pluck(:id)).pluck(:device_push_token)
+    registration_ids = followers_devices.pluck(:device_push_token)
 
     data = {
         caller_first_name: self.first_name,
