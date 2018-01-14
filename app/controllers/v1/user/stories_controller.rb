@@ -44,6 +44,7 @@ class V1::User::StoriesController < V1::User::BaseController
   # DELETE /stories/1
   def destroy
     @story.destroy
+    current_user.update_post_count
     render json: {success: true, message: 'Story deleted successfully', data: { story: StorySerializer.new(@story) }}
   end
 
