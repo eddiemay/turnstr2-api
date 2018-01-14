@@ -25,6 +25,7 @@ class V1::User::StoriesController < V1::User::BaseController
     @story = current_user.stories.new(story_params)
 
     if @story.save
+      current_user.update_post_count
       render_success data: {story: StorySerializer.new(@story) }, message: I18n.t('resource.created', resource: Story.model_name.human)
     else
       render_unprocessable_entity message: @story.errors.full_messages.join(', ')

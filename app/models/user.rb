@@ -71,7 +71,9 @@ class User < ApplicationRecord
 
   scope :populars, -> {order("follower_count desc").limit(3)}
 
-
+  def update_post_count
+    update(post_count: stories.count)
+  end
 
   # Follows a user.
   def follow(other_user)
