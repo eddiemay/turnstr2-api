@@ -198,7 +198,7 @@ class User < ApplicationRecord
           call_type: call_type
       }
 
-      begin
+      #begin
 
         if user_device.device_name == "Android"
           # make sure Android device has push token
@@ -207,15 +207,15 @@ class User < ApplicationRecord
         else
           # make sure iOS device has voip token
           next if  user_device.voip_token.blank?
-          PushNotifier.queue_voip(user_device.device_push_token, title, data)
+          PushNotifier.queue_voip(user_device.voip_token, title, data)
         end
 
         # send all queued voip notification
         PushNotifier.deliver_voip
 
-      rescue ActiveRecord::RecordInvalid => ex
-        errors.add(:base, ex.message)
-      end
+      #rescue ActiveRecord::RecordInvalid => ex
+      #errors.add(:base, ex.message)
+      #end
 
     end
 
