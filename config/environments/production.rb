@@ -89,7 +89,7 @@ Rails.application.configure do
     }
   }
 
-  config.default_family_user_ids = [1]
+  config.default_family_user_ids = [126, 165]
 
 
   # OpenTok credential

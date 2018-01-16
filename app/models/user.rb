@@ -145,23 +145,13 @@ class User < ApplicationRecord
 
   def add_default_family_member
     # make five user as family member
-      User.where(id:  Rails.application.config.default_family_user_ids).each do |user|
+    User.where(id:  Rails.application.config.default_family_user_ids).each do |user|
       user.follow(self)
       self.follow(user)
     end  
   end
 
   def create_live_session(session_type = 'video_call')
-    # don't create another live session if one already there
-    tokbox_session = get_live_session(session_type)
-    if tokbox_session.present?
-      # Use same session if it is not older than 6 hours
-      if (Time.now - tokbox_session.updated_at).to_i < (3600*1)
-        tokbox_session.touch
-        return tokbox_session
-      end
-    end
-
     opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
     if session_type == 'go_live'
       # go live session will be recorded always
