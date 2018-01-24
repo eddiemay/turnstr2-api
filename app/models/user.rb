@@ -30,7 +30,6 @@ class User < ApplicationRecord
 
   has_one :live_session, -> { where('completed = ?', false).order("created_at DESC") }
   has_many :live_sessions
-  has_many :video_stories, through: :live_sessions
 
 
   has_and_belongs_to_many :favourites,
@@ -55,6 +54,16 @@ class User < ApplicationRecord
             INNER JOIN `relationships` ON `users`.`id` = `relationships`.`follower_id`
             WHERE `relationships`.`followed_id` = :user_id)', user_id: user.id)
   }, class_name: 'UserDevice'
+
+
+  has_many :videos, -> (user) {
+    unscope(where: :user_id)
+        .where("go_live_videos.opentok_session_id IN
+            (SELECT live_sessions.session_id
+            FROM live_sessions
+            WHERE live_sessions.user_id = :user_id)
+            AND go_live_videos.status = 'uploaded'", user_id: user.id)
+  }, class_name: 'GoLiveVideo'
 
   has_many :family, -> (user){
     unscope(where: :user_id)

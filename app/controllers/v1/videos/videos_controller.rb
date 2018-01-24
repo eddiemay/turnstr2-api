@@ -3,10 +3,9 @@ class V1::Videos::VideosController < V1::Videos::BaseController
   before_action :set_video, only: [:show]
   # GET /stories
   def index
-    #@videos = @member.present? ? (@member.video_stories.page(current_page)) : (::GoLiveVideo.page current_page)
 
     # temporary
-    @videos = @member.present? ? (::GoLiveVideo.page current_page) : (::GoLiveVideo.page current_page)
+    @videos = @member.present? ? (@member.videos.page current_page) : (::GoLiveVideo.uploaded.page current_page)
     render_success data: {
         stories: ActiveModel::Serializer::CollectionSerializer.new(@videos, serializer: VideosSerializer),
         total_pages: @videos.total_pages,
