@@ -14,7 +14,7 @@ class GoLiveVideo < ApplicationRecord
 
 
   def url
-    'https://' + Rails.application.secrets.s3_host_name + '/' + Rails.application.secrets.s3_bucket  + '/' + Rails.application.config.open_tok_api_key + '/' + (opentok_session_id || '') +  '/archive.mp4'
+    'https://' + Rails.application.secrets.s3_host_name + '/' + Rails.application.secrets.s3_bucket  + '/' + Rails.application.config.open_tok_api_key + '/' + (opentok_id || '') +  '/archive.mp4'
   end
 
 end
