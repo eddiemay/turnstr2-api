@@ -4,7 +4,7 @@ class V1::Photos::PhotosController < V1::Photos::BaseController
 
   # GET /v1/photos
   def index
-    @photos =  @member.present? ? (@member.photos.page current_page) : (::Photo.page current_page)
+    @photos =  @member.present? ? (@member.photos.page current_page) : (current_user.following_photos.page current_page)
     render_success data: {
       photos: ActiveModel::Serializer::CollectionSerializer.new(@photos, serializer: PhotosSerializer),
       total_pages: @photos.total_pages,

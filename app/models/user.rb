@@ -57,14 +57,14 @@ class User < ApplicationRecord
 
   has_many :following_photos, -> (user) {
     unscope(where: :user_id)
-        .where('photos.album_id IN
+        .where("photos.album_id IN
             (SELECT albums.id
             FROM albums
             WHERE albums.user_id IN
               (SELECT `users`.id FROM `users`
                 INNER JOIN `relationships` ON `users`.`id` = `relationships`.`followed_id`
-                WHERE `relationships`.`follower_id` = :user_id)
-    )', user_id: user.id)
+                WHERE `relationships`.`follower_id` = :user_id) OR photos.visibility='public'
+    )", user_id: user.id)
   }, class_name: 'Photo'
 
 
