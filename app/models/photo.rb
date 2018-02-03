@@ -1,8 +1,11 @@
 class Photo < ApplicationRecord
+	extend Enumerize
 	include CanBeLiked
 	include CanBeCommented
 	belongs_to :album
 	delegate :user, to: :album
+
+	enumerize :visibility, in: [:public, :protected, :private], default: :protected
 
 	has_many :comments, as: :commentable
 	has_many :likes, as: :likable

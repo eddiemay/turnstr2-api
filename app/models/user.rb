@@ -55,6 +55,20 @@ class User < ApplicationRecord
             WHERE `relationships`.`followed_id` = :user_id)', user_id: user.id)
   }, class_name: 'UserDevice'
 
+  has_many :following_photos, -> (user) {
+    unscope(where: :user_id)
+        .where('photos.album_id IN
+            (SELECT albums.id
+            FROM albums
+            WHERE albums.user_id IN
+              (SELECT `users`.id FROM `users`
+                INNER JOIN `relationships` ON `users`.`id` = `relationships`.`followed_id`
+                WHERE `relationships`.`follower_id` = :user_id)
+    )', user_id: user.id)
+  }, class_name: 'Photo'
+
+
+
 
   has_many :videos, -> (user) {
     unscope(where: :user_id)
