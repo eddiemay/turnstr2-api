@@ -19,7 +19,7 @@ class V1::Videos::VideosController < V1::Videos::BaseController
 
   # GET /stories/1
   def show
-     render json: {success: true, data: { story: VideoSerializer.new(@video, current_user: current_user) }}
+     render json: {success: true, data: { video: ::VideosSerializer.new(@video, current_user: current_user) }}
   end
 
   private 
@@ -29,7 +29,7 @@ class V1::Videos::VideosController < V1::Videos::BaseController
   end  
 
   def set_video
-    @video = @member.present? ? @member.stories.find(params[:id]) : Story.find(params[:id])
+    @video = @member.present? ? @member.videos.find(params[:id]) : GoLiveVideo.find(params[:id])
 
   end
 end

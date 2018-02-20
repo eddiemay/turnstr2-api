@@ -26,7 +26,7 @@ Rails.application.routes.draw do
       resources :likes, controller: 'story/likes', only: [:create, :destroy]
     end
 
-    resources :videos, controller: 'videos/videos', only: [:index] do
+    resources :videos, controller: 'videos/videos', only: [:index, :show] do
       resources :comments, controller: 'videos/comments', only: [:index, :create, :destroy, :update]
       resources :likes, controller: 'videos/likes', only: [:create, :destroy]
     end
