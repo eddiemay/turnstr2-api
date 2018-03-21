@@ -243,8 +243,6 @@ class User < ApplicationRecord
   end
 
   def live_broadcast_notification
-    opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
-    tok_box_token = opentok.generate_token self.live_session.session_id, :role => :subscriber
     firebase_server_api_key = "AAAA8RDsLvc:APA91bEaDPTpc5jNOEOQbz8jjPaBA2_sgzsXK-XzJbffSmayzutm49ztX2Sh70ndF1Q5TINT0Dcxo14jF4Rub32BqAC9aaKtte1UToeTHCDXlbCMUQ_vlIzCzo4MnXu8FFrUo8D_undf"
 
     # Only followers need to be notified. Currently we are notifying all user
@@ -256,7 +254,6 @@ class User < ApplicationRecord
         caller_first_name: self.first_name,
         caller_last_name: self.last_name,
         caller_tokbox_session_id: self.live_session.session_id,
-        token: tok_box_token,
         caller_id: self.id,
         call_type: 'go_live_subscription'
     }
@@ -275,5 +272,12 @@ class User < ApplicationRecord
 
     true
   end
+
+
+  def tokbox_token_for_go_live(tokbox_session_id)
+    opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
+    screen_name = self.username || self.first_name
+    opentok.generate_token tokbox_session_id, :role => :subscriber, :data => "username=#{screen_name}"
+  end  
 
 end
