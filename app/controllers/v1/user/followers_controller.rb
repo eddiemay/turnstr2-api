@@ -4,7 +4,7 @@ class V1::User::FollowersController < V1::User::BaseController
   def index
     followers = current_user.followers.page current_page
     render_success data: {
-        followers: ActiveModel::Serializer::CollectionSerializer.new(followers, serializer: UserListSerializer),
+        followers: ActiveModel::Serializer::CollectionSerializer.new(followers, serializer: UserSerializer),
         total_pages: followers.total_pages,
         current_page: followers.current_page,
         next_page: followers.next_page,
