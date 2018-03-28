@@ -8,12 +8,12 @@ class V1::User::GoliveSessionController < V1::User::BaseController
     }
   end
 
-  # POST /user/session
+  # POST /user/golive_session
   def create
 
     if live_session = current_user.create_live_session('go_live')
       # invite (send push notification) to invitee users so they can join the go live
-      current_user.invite_users_to_my_live_session(params[:invitees], 'go_live', live_session)
+      current_user.invite_users_to_my_live_session(params[:invitees], 'go_live', live_session.session_id)
 
       render_success data: {session: live_session}, message: I18n.t('resource.crated', resource: LiveSession.model_name.human)
     else
@@ -21,11 +21,11 @@ class V1::User::GoliveSessionController < V1::User::BaseController
     end
   end
 
-
-
-  # DELETE /photos/1
-  def destroy
-
+  # PUT /user/golive_session
+  def update
+    # invite (send push notification) to invitee users so they can join the go live
+    current_user.invite_users_to_my_live_session(params[:invitees], 'go_live', params[:tokbox_session_id])
+    render_success data: {session: params[:tokbox_session_id]}, message: I18n.t('resource.updated', resource: LiveSession.model_name.human)
 
   end
 
