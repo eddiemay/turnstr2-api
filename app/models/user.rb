@@ -206,13 +206,13 @@ class User < ApplicationRecord
       next if user_device.blank?
 
       opentok = OpenTok::OpenTok.new Rails.application.config.open_tok_api_key, Rails.application.config.open_tok_api_secret
-      tok_box_token = opentok.generate_token tokbox_session
+      tok_box_token = opentok.generate_token tokbox_session.session_id
 
       title = "Invitation from #{self.first_name} to join video call"
       data = {
           caller_first_name: self.first_name,
           caller_last_name: self.last_name,
-          caller_tokbox_session_id: tokbox_session,
+          caller_tokbox_session_id: tokbox_session.session_id,
           token: tok_box_token,
           caller_id: self.id,
           sender_id: user.id,
