@@ -18,7 +18,7 @@ class PushNotifier
 
   def self.queue_voip(voip_token, title, data)
       n = Rpush::Apns::Notification.new
-      n.app = Rpush::Apns::App.find_by_name("ios_app")
+      n.app = Rpush::Apns::App.find_by_name("ios_app_dev")
       n.device_token = voip_token
       n.content_available = true
       n.alert = title
