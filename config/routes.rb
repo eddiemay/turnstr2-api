@@ -69,8 +69,8 @@ Rails.application.routes.draw do
         resources :comments, controller: 'story/comments', only: [:index]        
       end
       # Live stream
-      resource :live_session, controller: 'live_session', only: [:show, :create, :destroy]
-      resource :golive_session, controller: 'golive_session', only: [:create]
+      resource :live_session, controller: 'live_session', only: [:show, :create, :update]
+      resource :golive_session, controller: 'golive_session', only: [:create, :update]
       resource :golive_token, controller: 'golive_token', only: [:create]
       resources :live_notify, only: [:create]
       resources :devices, only: [:index, :create, :destroy]
