@@ -11,7 +11,7 @@ class V1::FamilyController < V1::BaseController
     ##    'rocky@gmail.com'
     ##]).page current_page
 
-    @family = @member.family
+    @family = @member.family.page current_page
 
     # uncomment following line when patch work no longer needed
     # @family = @member.family.page current_page
