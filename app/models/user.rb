@@ -264,7 +264,7 @@ class User < ApplicationRecord
                       {
                           registration_ids: registration_ids,
                           priority: 'high',
-                          notification: {title: "", body:"#{self.first_name} is live now"},
+                          # notification: {title: "", body:"#{self.first_name} is live now"},
                           data: data
                       }
                   ),
