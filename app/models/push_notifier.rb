@@ -7,7 +7,7 @@ class PushNotifier
                       {
                           registration_ids: tokens,
                           priority: 'high',
-                          notification: {title: '', body:title},
+                          # notification: {title: '', body:title},
                           data: data
                       }
                   ),
