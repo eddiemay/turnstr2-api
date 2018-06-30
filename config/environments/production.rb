@@ -93,7 +93,7 @@ Rails.application.configure do
 
 
   # OpenTok credential
-  config.open_tok_api_key = "45910392"
-  config.open_tok_api_secret = "7038c92fa5af4c0458779ae41eeecf4913cbb195"
+  config.open_tok_api_key = "46139582"
+  config.open_tok_api_secret = "37e0e8b82f2073f00d60281806963b75b427bbac"
 
 end
