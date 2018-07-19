@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171224184934) do
+ActiveRecord::Schema.define(version: 20180719084237) do
 
   create_table "admins", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
@@ -259,6 +259,26 @@ ActiveRecord::Schema.define(version: 20171224184934) do
     t.index ["user_id"], name: "index_user_devices_on_user_id", using: :btree
   end
 
+  create_table "user_stories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.integer  "view_count", default: 0
+    t.string   "thumb_url"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.index ["user_id"], name: "index_user_stories_on_user_id", using: :btree
+  end
+
+  create_table "user_story_media", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_story_id"
+    t.string   "media_file_name"
+    t.string   "media_content_type"
+    t.integer  "media_file_size"
+    t.datetime "media_updated_at"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.index ["user_story_id"], name: "index_user_story_media_on_user_story_id", using: :btree
+  end
+
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "email"
     t.string   "username"
@@ -327,4 +347,6 @@ ActiveRecord::Schema.define(version: 20171224184934) do
   add_foreign_key "relationships", "users", column: "follower_id"
   add_foreign_key "stories", "users"
   add_foreign_key "user_devices", "users"
+  add_foreign_key "user_stories", "users"
+  add_foreign_key "user_story_media", "user_stories"
 end

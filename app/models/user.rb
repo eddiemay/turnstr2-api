@@ -31,6 +31,8 @@ class User < ApplicationRecord
   has_one :live_session, -> { where('completed = ?', false).order("created_at DESC") }
   has_many :live_sessions
 
+  has_many :user_stories
+
 
   has_and_belongs_to_many :favourites,
       class_name: "User", 
@@ -87,6 +89,9 @@ class User < ApplicationRecord
         user_id: user.id
       )}, 
     class_name: 'User'
+
+
+  has_many :following_user_stories, through: :following, source: :user_stories
 
   scope :with_voip_token, -> {joins(:devices).distinct}
 

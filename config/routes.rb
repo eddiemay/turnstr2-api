@@ -74,6 +74,7 @@ Rails.application.routes.draw do
       resource :golive_token, controller: 'golive_token', only: [:create]
       resources :live_notify, only: [:create]
       resources :devices, only: [:index, :create, :destroy]
+      resources :user_stories, only: [:index, :show, :create, :destroy]
       post '/stories/arrange', to: 'stories#arrange'  
     end  
 
