@@ -1,7 +1,7 @@
 class V1::User::UserStoriesController < V1::User::BaseController
   before_action :set_user_story, only: [:show]
 
-  # GET /stories
+  # GET /user/user_stories
   def index
     @user_stories = current_user.following_user_stories.reorder('updated_at desc').page current_page
     render_success data: {
@@ -15,13 +15,20 @@ class V1::User::UserStoriesController < V1::User::BaseController
     }
   end
 
-  # GET /stories/1
+  # GET /user/user_stories/1
   def show
-    render json: {success: true, data: { story: UserStorySerializer.new(@user_story) }}
+    @user_story.viewed(current_user) unless current_user == @user_story.user
+    render json: {success: true, data: { user_story: UserStorySerializer.new(@user_story,scope: { include_details: true}) }}
   end
 
-  # POST /stories
+  # POST /user/user_stories
   def create
+    user_story = current_user.user_stories.new(user_story_params)
+    if user_story.save
+      render_success data: {comment: UserStorySerializer.new(user_story) }, message: I18n.t('resource.created', resource: UserStory.model_name.human)
+    else
+      render_unprocessable_entity message: user_story.errors.full_messages.join(', ')
+    end
 
   end
 
@@ -37,6 +44,6 @@ class V1::User::UserStoriesController < V1::User::BaseController
 
     # Only allow a trusted parameter "white list" through.
     def user_story_params
-      params.require(:story).permit(:caption, :face1_video_thumb, :face2_video_thumb, :face3_video_thumb, :face4_video_thumb, :face5_video_thumb, :face6_video_thumb,:face1_media, :face2_media, :face3_media, :face4_media, :face5_media, :face6_media)
+      params.require(:user_story).permit(media_attributes:[:media])
     end
 end
